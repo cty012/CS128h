@@ -1,1 +1,8 @@
+# system
+.DS_Store
+
+# editor
+.vsc
+
+# rust
 /target
