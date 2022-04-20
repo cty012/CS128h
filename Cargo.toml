@@ -5,6 +5,13 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies.amethyst]
-version = "0.15"
-features = ["metal"]
+[dependencies]
+amethyst = {version = "0.15", features = ["no-slow-safety-checks"]}
+amethyst_rendy = {}
+log = { version = "0.4", features = ["serde"] }
+
+[features]
+default = ["vulkan"]
+empty = ["amethyst/empty"]
+metal = ["amethyst/metal"]
+vulkan = ["amethyst/vulkan"]
