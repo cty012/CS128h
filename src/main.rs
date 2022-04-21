@@ -10,6 +10,7 @@ use amethyst::{
     ui::{RenderUi, UiBundle},
     utils::application_root_dir,
 };
+
 mod lib;
 
 fn main() -> amethyst::Result<()> {

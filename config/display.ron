@@ -1,4 +1,4 @@
 (
     title: "Platformer with rust",
-    dimensions: Some((1280, 720))
+    dimensions: Some((1280, 720)),
 )
