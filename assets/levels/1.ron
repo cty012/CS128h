@@ -1,0 +1,134 @@
+(
+    size: (3000, 720),
+    player: (
+        pos: (100, 130),
+        size: (40, 60),
+        color: (255, 0, 0),
+    ),
+    targets: [
+        (
+            name: "t0",
+            pos: (2800, 320),
+            size: (100, 250),
+            color: (240, 230, 140),
+        ),
+    ],
+    coins: [
+        (
+            name: "c0",
+            pos: (1900, 105),
+            size: (10, 10),
+            color: (255, 215, 0),
+        ),
+        (
+            name: "c1",
+            pos: (2000, 105),
+            size: (10, 10),
+            color: (255, 215, 0),
+        ),
+        (
+            name: "c2",
+            pos: (2100, 105),
+            size: (10, 10),
+            color: (255, 215, 0),
+        )
+    ],
+    switches: [
+    ],
+    monsters: [
+        (
+            name: "m0",
+            track: [
+                (
+                    pos: (1210, 130),
+                    speed: (1, 0),
+                ),
+                (
+                    pos: (1500, 130),
+                    speed: (-1, 0),
+                ),
+            ],
+            size: (40, 60),
+            color: (50, 205, 50),
+        ),
+    ],
+    elevators: [
+    ],
+    obstacles: [
+        (
+            name: "o-ground",
+            pos: (0, 70),
+            size: (3000, 70),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o-jump",
+            pos: (600, 170),
+            size: (250, 100),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o-jump2",
+            pos: (850, 120),
+            size: (100, 50),
+            color: (0, 0, 128),
+        ),
+    ],
+    descriptions: [
+        (
+            name: "d-move",
+            pos: (200, 320),
+            size: (200, 200),
+            text: "PRESS A AND D TO MOVE BACKWARD AND FORWARD",
+            font: (
+                family: "uasquared.ttf",
+                size: 20,
+            ),
+            color: (128, 128, 128),
+        ),
+        (
+            name: "d-jump",
+            pos: (600, 320),
+            size: (200, 200),
+            text: "PRESS W TO JUMP",
+            font: (
+                family: "uasquared.ttf",
+                size: 20,
+            ),
+            color: (128, 128, 128),
+        ),
+        (
+            name: "d-monster",
+            pos: (1300, 320),
+            size: (200, 200),
+            text: "BEWARE OF THE MONSTER ON PATROL",
+            font: (
+                family: "uasquared.ttf",
+                size: 20,
+            ),
+            color: (128, 128, 128),
+        ),
+        (
+            name: "d-coin",
+            pos: (1970, 320),
+            size: (200, 200),
+            text: "WALK TO COLLECT THE COINS",
+            font: (
+                family: "uasquared.ttf",
+                size: 20,
+            ),
+            color: (128, 128, 128),
+        ),
+        (
+            name: "d-target",
+            pos: (2700, 350),
+            size: (200, 200),
+            text: "REACH THE TARGET TO WIN THE GAME",
+            font: (
+                family: "uasquared.ttf",
+                size: 20,
+            ),
+            color: (128, 128, 128),
+        ),
+    ],
+)

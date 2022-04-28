@@ -1,0 +1,3752 @@
+{
+    "player": {
+        "pos": [[50, 1890]],
+        "size": [40, 60],
+        "color": [255, 0, 0]
+    },
+    "map": {
+        "size": [10000, 2000],
+        "target": [
+            {
+                "name": "t0",
+                "pos": [9800, 550],
+                "size": [100, 250],
+                "color": [240, 230, 140]
+            }
+        ],
+        "coin": [
+            {
+                "name": "c0",
+                "pos": [2140, 1680],
+                "size": [10, 10],
+                "color": [255, 215, 0],
+                "update": ["name"]
+            },
+            {
+                "name": "c1",
+                "pos": [3950, 1000],
+                "size": [10, 10],
+                "color": [255, 215, 0],
+                "update": ["name"]
+            },
+            {
+                "name": "c2",
+                "pos": [5910, 1880],
+                "size": [10, 10],
+                "color": [255, 215, 0],
+                "update": ["name"]
+            }
+        ],
+        "switch": [
+            {
+                "name": "s-alpha",
+                "pos": [15, 1005],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["remove", "o-block-0"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-beta",
+                "pos": [2025, 565],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["object", "o0-b1-9", "pos", "[2200, 1200]"],
+                        ["object", "o0-b1-10", "pos", "[2200, 1210]"],
+                        ["object", "m0-lava-0", "speed", "[0, 2]"],
+                        ["object", "m0-lava-1", "speed", "[0, 2]"],
+                        ["object", "m0-lava-2", "speed", "[0, 2]"],
+                        ["object", "m0-lava-0", "update_speed", "False"],
+                        ["object", "m0-lava-1", "update_speed", "False"],
+                        ["object", "m0-lava-2", "update_speed", "False"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-gamma",
+                "pos": [2215, 1285],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["remove", "o-block-1"],
+                        ["object", "m0-car-0", "color", "[50, 205, 50]"],
+                        ["object", "m0-car-0", "speed", "[10, 10]"],
+                        ["object", "m0-car-0", "update_speed", "False"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s0-g-up",
+                "pos": [2640, 770],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["if", ["object", "e0-1-0", "pos", "[2460, 1050]"], [
+                            ["object", "e0-1-0", "speed", "[0, -2]"],
+                            ["object", "e0-1-1", "speed", "[0, -2]"],
+                            ["object", "e0-1-2", "speed", "[0, -2]"],
+                            ["object", "e0-1-3", "speed", "[0, -2]"],
+                            ["object", "e0-1-0", "update_speed", "False"],
+                            ["object", "e0-1-1", "update_speed", "False"],
+                            ["object", "e0-1-2", "update_speed", "False"],
+                            ["object", "e0-1-3", "update_speed", "False"]
+                        ]]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ],
+                    "auto": [
+                        ["state", "close"],
+                        ["color", [102, 255, 178]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s0-g-down",
+                "pos": [2710, 770],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["if", ["object", "e0-1-0", "pos", "[2460, 1050]"], [
+                            ["object", "e0-1-0", "speed", "[0, 2]"],
+                            ["object", "e0-1-1", "speed", "[0, 2]"],
+                            ["object", "e0-1-2", "speed", "[0, 2]"],
+                            ["object", "e0-1-3", "speed", "[0, 2]"],
+                            ["object", "e0-1-0", "update_speed", "False"],
+                            ["object", "e0-1-1", "update_speed", "False"],
+                            ["object", "e0-1-2", "update_speed", "False"],
+                            ["object", "e0-1-3", "update_speed", "False"]
+                        ]]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ],
+                    "auto": [
+                        ["state", "close"],
+                        ["color", [102, 255, 178]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s0-l1-up",
+                "pos": [2640, 420],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["if", ["object", "e0-1-0", "pos", "[2460, 700]"], [
+                            ["object", "e0-1-0", "speed", "[0, -2]"],
+                            ["object", "e0-1-1", "speed", "[0, -2]"],
+                            ["object", "e0-1-2", "speed", "[0, -2]"],
+                            ["object", "e0-1-3", "speed", "[0, -2]"],
+                            ["object", "e0-1-0", "update_speed", "False"],
+                            ["object", "e0-1-1", "update_speed", "False"],
+                            ["object", "e0-1-2", "update_speed", "False"],
+                            ["object", "e0-1-3", "update_speed", "False"]
+                        ]]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ],
+                    "auto": [
+                        ["state", "close"],
+                        ["color", [102, 255, 178]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s0-l2-down",
+                "pos": [2710, 420],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["if", ["object", "e0-1-0", "pos", "[2460, 700]"], [
+                            ["object", "e0-1-0", "speed", "[0, 2]"],
+                            ["object", "e0-1-1", "speed", "[0, 2]"],
+                            ["object", "e0-1-2", "speed", "[0, 2]"],
+                            ["object", "e0-1-3", "speed", "[0, 2]"],
+                            ["object", "e0-1-0", "update_speed", "False"],
+                            ["object", "e0-1-1", "update_speed", "False"],
+                            ["object", "e0-1-2", "update_speed", "False"],
+                            ["object", "e0-1-3", "update_speed", "False"]
+                        ]]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ],
+                    "auto": [
+                        ["state", "close"],
+                        ["color", [102, 255, 178]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s0-l2-down",
+                "pos": [2710, 70],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["if", ["object", "e0-1-0", "pos", "[2460, 350]"], [
+                            ["object", "e0-1-0", "speed", "[0, 2]"],
+                            ["object", "e0-1-1", "speed", "[0, 2]"],
+                            ["object", "e0-1-2", "speed", "[0, 2]"],
+                            ["object", "e0-1-3", "speed", "[0, 2]"],
+                            ["object", "e0-1-0", "update_speed", "False"],
+                            ["object", "e0-1-1", "update_speed", "False"],
+                            ["object", "e0-1-2", "update_speed", "False"],
+                            ["object", "e0-1-3", "update_speed", "False"]
+                        ]]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ],
+                    "auto": [
+                        ["state", "close"],
+                        ["color", [102, 255, 178]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s0-b1-up",
+                "pos": [2640, 1120],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["if", ["object", "e0-1-0", "pos", "[2460, 1400]"], [
+                            ["object", "e0-1-0", "speed", "[0, -2]"],
+                            ["object", "e0-1-1", "speed", "[0, -2]"],
+                            ["object", "e0-1-2", "speed", "[0, -2]"],
+                            ["object", "e0-1-3", "speed", "[0, -2]"],
+                            ["object", "e0-1-0", "update_speed", "False"],
+                            ["object", "e0-1-1", "update_speed", "False"],
+                            ["object", "e0-1-2", "update_speed", "False"],
+                            ["object", "e0-1-3", "update_speed", "False"]
+                        ]]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ],
+                    "auto": [
+                        ["state", "close"],
+                        ["color", [102, 255, 178]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s0-b1-down",
+                "pos": [2710, 1120],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["if", ["object", "e0-1-0", "pos", "[2460, 1400]"], [
+                            ["object", "e0-1-0", "speed", "[0, 2]"],
+                            ["object", "e0-1-1", "speed", "[0, 2]"],
+                            ["object", "e0-1-2", "speed", "[0, 2]"],
+                            ["object", "e0-1-3", "speed", "[0, 2]"],
+                            ["object", "e0-1-0", "update_speed", "False"],
+                            ["object", "e0-1-1", "update_speed", "False"],
+                            ["object", "e0-1-2", "update_speed", "False"],
+                            ["object", "e0-1-3", "update_speed", "False"]
+                        ]]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ],
+                    "auto": [
+                        ["state", "close"],
+                        ["color", [102, 255, 178]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s0-b2-up",
+                "pos": [2640, 1470],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["if", ["object", "e0-1-0", "pos", "[2460, 1750]"], [
+                            ["object", "e0-1-0", "speed", "[0, -2]"],
+                            ["object", "e0-1-1", "speed", "[0, -2]"],
+                            ["object", "e0-1-2", "speed", "[0, -2]"],
+                            ["object", "e0-1-3", "speed", "[0, -2]"],
+                            ["object", "e0-1-0", "update_speed", "False"],
+                            ["object", "e0-1-1", "update_speed", "False"],
+                            ["object", "e0-1-2", "update_speed", "False"],
+                            ["object", "e0-1-3", "update_speed", "False"]
+                        ]]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ],
+                    "auto": [
+                        ["state", "close"],
+                        ["color", [102, 255, 178]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-0",
+                "pos": [2060, 1480],
+                "size": [30, 30],
+                "color": [48, 105, 152],
+                "command": {
+                    "close": [
+                        ["color", [75, 139, 190]]
+                    ],
+                    "auto": [
+                        ["color", [48, 105, 152]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-1",
+                "pos": [2090, 1480],
+                "size": [30, 30],
+                "color": [48, 105, 152],
+                "command": {
+                    "close": [
+                        ["color", [75, 139, 190]]
+                    ],
+                    "auto": [
+                        ["color", [48, 105, 152]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-2",
+                "pos": [2060, 1510],
+                "size": [30, 20],
+                "color": [48, 105, 152],
+                "command": {
+                    "close": [
+                        ["color", [75, 139, 190]]
+                    ],
+                    "auto": [
+                        ["color", [48, 105, 152]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-eye0",
+                "pos": [2090, 1520],
+                "size": [10, 10],
+                "color": [48, 105, 152],
+                "command": {
+                    "close": [
+                        ["color", [75, 139, 190]]
+                    ],
+                    "auto": [
+                        ["color", [48, 105, 152]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-eye1",
+                "pos": [2100, 1510],
+                "size": [20, 20],
+                "color": [48, 105, 152],
+                "command": {
+                    "close": [
+                        ["color", [75, 139, 190]]
+                    ],
+                    "auto": [
+                        ["color", [48, 105, 152]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-3",
+                "pos": [2120, 1480],
+                "size": [60, 60],
+                "color": [48, 105, 152],
+                "command": {
+                    "close": [
+                        ["color", [75, 139, 190]]
+                    ],
+                    "auto": [
+                        ["color", [48, 105, 152]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-4",
+                "pos": [2000, 1540],
+                "size": [60, 60],
+                "color": [48, 105, 152],
+                "command": {
+                    "close": [
+                        ["color", [75, 139, 190]]
+                    ],
+                    "auto": [
+                        ["color", [48, 105, 152]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-5",
+                "pos": [2060, 1540],
+                "size": [60, 60],
+                "color": [48, 105, 152],
+                "command": {
+                    "close": [
+                        ["color", [75, 139, 190]]
+                    ],
+                    "auto": [
+                        ["color", [48, 105, 152]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-6",
+                "pos": [2120, 1540],
+                "size": [60, 60],
+                "color": [48, 105, 152],
+                "command": {
+                    "close": [
+                        ["color", [75, 139, 190]]
+                    ],
+                    "auto": [
+                        ["color", [48, 105, 152]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-7",
+                "pos": [2000, 1600],
+                "size": [60, 60],
+                "color": [48, 105, 152],
+                "command": {
+                    "close": [
+                        ["color", [75, 139, 190]]
+                    ],
+                    "auto": [
+                        ["color", [48, 105, 152]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-8",
+                "pos": [2180, 1540],
+                "size": [60, 60],
+                "color": [255, 212, 59],
+                "command": {
+                    "close": [
+                        ["color", [255, 232, 115]]
+                    ],
+                    "auto": [
+                        ["color", [255, 212, 59]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-9",
+                "pos": [2060, 1600],
+                "size": [60, 60],
+                "color": [255, 212, 59],
+                "command": {
+                    "close": [
+                        ["color", [255, 232, 115]]
+                    ],
+                    "auto": [
+                        ["color", [255, 212, 59]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-10",
+                "pos": [2120, 1600],
+                "size": [60, 60],
+                "color": [255, 212, 59],
+                "command": {
+                    "close": [
+                        ["color", [255, 232, 115]]
+                    ],
+                    "auto": [
+                        ["color", [255, 212, 59]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-11",
+                "pos": [2180, 1600],
+                "size": [60, 60],
+                "color": [255, 212, 59],
+                "command": {
+                    "close": [
+                        ["color", [255, 232, 115]]
+                    ],
+                    "auto": [
+                        ["color", [255, 212, 59]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-12",
+                "pos": [2060, 1660],
+                "size": [60, 60],
+                "color": [255, 212, 59],
+                "command": {
+                    "close": [
+                        ["color", [255, 232, 115]]
+                    ],
+                    "auto": [
+                        ["color", [255, 212, 59]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-eye2",
+                "pos": [2120, 1670],
+                "size": [20, 20],
+                "color": [255, 212, 59],
+                "command": {
+                    "close": [
+                        ["color", [255, 232, 115]]
+                    ],
+                    "auto": [
+                        ["color", [255, 212, 59]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-eye3",
+                "pos": [2140, 1670],
+                "size": [10, 10],
+                "color": [255, 212, 59],
+                "command": {
+                    "close": [
+                        ["color", [255, 232, 115]]
+                    ],
+                    "auto": [
+                        ["color", [255, 212, 59]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-13",
+                "pos": [2150, 1670],
+                "size": [30, 20],
+                "color": [255, 212, 59],
+                "command": {
+                    "close": [
+                        ["color", [255, 232, 115]]
+                    ],
+                    "auto": [
+                        ["color", [255, 212, 59]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-14",
+                "pos": [2120, 1690],
+                "size": [30, 30],
+                "color": [255, 212, 59],
+                "command": {
+                    "close": [
+                        ["color", [255, 232, 115]]
+                    ],
+                    "auto": [
+                        ["color", [255, 212, 59]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-py-15",
+                "pos": [2150, 1690],
+                "size": [30, 30],
+                "color": [255, 212, 59],
+                "command": {
+                    "close": [
+                        ["color", [255, 232, 115]]
+                    ],
+                    "auto": [
+                        ["color", [255, 212, 59]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-b3-jump",
+                "pos": [1650, 1920],
+                "size": [150, 20],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["remove", "o0-b3-block"],
+                        ["object", "e-b3-jump", "pos", "[1650, 1960]"],
+                        ["object", "e-b3-jump", "speed", "[0, -50]"],
+                        ["object", "e-b3-jump", "update_speed", "False"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-cable",
+                "pos": [3160, 1675],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["object", "e-cable-left", "speed", "[0, -4]"],
+                        ["object", "e-cable-right", "speed", "[0, -2]"],
+                        ["object", "e-cable-top", "speed", "[0, -2]"],
+                        ["object", "e-cable-bottom", "speed", "[0, -2]"],
+                        ["object", "e-cable-connect", "speed", "[0, -2]"],
+                        ["object", "e-cable-left", "update_speed", "False"],
+                        ["object", "e-cable-right", "update_speed", "False"],
+                        ["object", "e-cable-top", "update_speed", "False"],
+                        ["object", "e-cable-bottom", "update_speed", "False"],
+                        ["object", "e-cable-connect", "update_speed", "False"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-jump",
+                "pos": [6660, 1920],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["if", ["object", "e-jump", "pos", "[6650, 1940]"], [
+                            ["object", "e-jump", "pos", "[6650, 1960]"],
+                            ["object", "e-jump", "speed", "[0, -50]"],
+                            ["object", "e-jump", "update_speed", "False"]
+                        ]]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ],
+                    "auto": [
+                        ["state", "close"],
+                        ["color", [102, 255, 178]]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s-delta",
+                "pos": [5900, 1905],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["object", "e2-0-0", "speed", "[-2, 0]"],
+                        ["object", "e2-0-0", "update_speed", "False"],
+                        ["remove", "o2-0-12"],
+                        ["object", "m2-lava-11", "speed", "[-1, 0]"],
+                        ["object", "m2-lava-11", "update_speed", "False"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            }
+        ],
+        "monster": [
+            {
+                "name": "m0-0",
+                "track": [
+                    {
+                        "pos": [160, 990],
+                        "speed": [10, 0]
+                    },
+                    {
+                        "pos": [860, 990],
+                        "speed": [-10, 0]
+                    }
+                ],
+                "size": [40, 60],
+                "color": [50, 205, 50],
+                "update": ["pos"]
+            },
+            {
+                "name": "m0-lava-0",
+                "track": [
+                    {
+                        "pos": [1960, 460],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [1960, 590],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [160, 20],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m0-lava-1",
+                "track": [
+                    {
+                        "pos": [1940, 450],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [1940, 580],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [20, 30],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m0-lava-2",
+                "track": [
+                    {
+                        "pos": [2120, 450],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2120, 580],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [20, 30],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m0-l2-0",
+                "track": [
+                    {
+                        "pos": [2010, 170],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [40, 60],
+                "color": [50, 205, 50]
+            },
+            {
+                "name": "m0-car-0",
+                "track": [
+                    {
+                        "pos": [1950, 1250],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2040, 1340],
+                        "speed": [10, 0]
+                    },
+                    {
+                        "pos": [2700, 1340],
+                        "speed": [-3, 0]
+                    },
+                    {
+                        "pos": [2409, 1340],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [40, 60],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "m0-jump0",
+                "track": [
+                    {
+                        "pos": [1650, 1450],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [200, 50],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m0-jump1",
+                "track": [
+                    {
+                        "pos": [1800, 1800],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [100, 10],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m1-lavacloud-0",
+                "track": [
+                    {
+                        "pos": [3800, 690],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [100, 110],
+                "color": [255, 200, 120]
+            },
+            {
+                "name": "m1-lavacloud-1",
+                "track": [
+                    {
+                        "pos": [3900, 610],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [120, 190],
+                "color": [255, 200, 120]
+            },
+            {
+                "name": "m1-lavacloud-2",
+                "track": [
+                    {
+                        "pos": [4020, 680],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [90, 120],
+                "color": [255, 200, 120]
+            },
+            {
+                "name": "m1-lavacloud-3",
+                "track": [
+                    {
+                        "pos": [5000, 770],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [100, 110],
+                "color": [255, 200, 120]
+            },
+            {
+                "name": "m1-lavacloud-4",
+                "track": [
+                    {
+                        "pos": [5100, 690],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [120, 190],
+                "color": [255, 200, 120]
+            },
+            {
+                "name": "m1-lavacloud-5",
+                "track": [
+                    {
+                        "pos": [5220, 760],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [90, 120],
+                "color": [255, 200, 120]
+            },
+            {
+                "name": "m2-lava-0",
+                "track": [
+                    {
+                        "pos": [3900, 1450],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [1500, 500],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-1",
+                "track": [
+                    {
+                        "pos": [3650, 1250],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [2000, 200],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-2",
+                "track": [
+                    {
+                        "pos": [3650, 1150],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [2200, 100],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-3",
+                "track": [
+                    {
+                        "pos": [7900, 100],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [100, 850],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-4",
+                "track": [
+                    {
+                        "pos": [7800, 950],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [300, 20],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-5",
+                "track": [
+                    {
+                        "pos": [5820, 970],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [180, 30],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-6",
+                "track": [
+                    {
+                        "pos": [5790, 980],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [60, 170],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-7",
+                "track": [
+                    {
+                        "pos": [5760, 1040],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [30, 110],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-8",
+                "track": [
+                    {
+                        "pos": [7100, 1450],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [1200, 500],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-9",
+                "track": [
+                    {
+                        "pos": [7100, 1290],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [1500, 160],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-10",
+                "track": [
+                    {
+                        "pos": [6010, 1900],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [500, 50],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m2-lava-11",
+                "track": [
+                    {
+                        "pos": [6010, 1900],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [5850, 1900],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [160, 50],
+                "color": [255, 128, 0],
+                "update": ["pos"]
+            }
+        ],
+        "elevator" : [
+            {
+                "name": "e0-0-0",
+                "track": [
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-1",
+                "track": [
+                    {
+                        "pos": [450, 1900],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-2",
+                "track": [
+                    {
+                        "pos": [500, 1850],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-3",
+                "track": [
+                    {
+                        "pos": [550, 1800],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-4",
+                "track": [
+                    {
+                        "pos": [600, 1750],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-5",
+                "track": [
+                    {
+                        "pos": [650, 1700],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-6",
+                "track": [
+                    {
+                        "pos": [700, 1650],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-7",
+                "track": [
+                    {
+                        "pos": [750, 1600],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-8",
+                "track": [
+                    {
+                        "pos": [800, 1550],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-9",
+                "track": [
+                    {
+                        "pos": [850, 1500],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-10",
+                "track": [
+                    {
+                        "pos": [900, 1450],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-11",
+                "track": [
+                    {
+                        "pos": [950, 1400],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-12",
+                "track": [
+                    {
+                        "pos": [1000, 1350],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-13",
+                "track": [
+                    {
+                        "pos": [1050, 1300],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-14",
+                "track": [
+                    {
+                        "pos": [1100, 1250],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-15",
+                "track": [
+                    {
+                        "pos": [1150, 1200],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-16",
+                "track": [
+                    {
+                        "pos": [1200, 1150],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-17",
+                "track": [
+                    {
+                        "pos": [1250, 1100],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-18",
+                "track": [
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-19",
+                "track": [
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-20",
+                "track": [
+                    {
+                        "pos": [1300, 1100],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-21",
+                "track": [
+                    {
+                        "pos": [1250, 1150],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-22",
+                "track": [
+                    {
+                        "pos": [1200, 1200],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-23",
+                "track": [
+                    {
+                        "pos": [1150, 1250],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-24",
+                "track": [
+                    {
+                        "pos": [1100, 1300],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-25",
+                "track": [
+                    {
+                        "pos": [1050, 1350],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-26",
+                "track": [
+                    {
+                        "pos": [1000, 1400],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-27",
+                "track": [
+                    {
+                        "pos": [950, 1450],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-28",
+                "track": [
+                    {
+                        "pos": [900, 1500],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-29",
+                "track": [
+                    {
+                        "pos": [850, 1550],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-30",
+                "track": [
+                    {
+                        "pos": [800, 1600],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-31",
+                "track": [
+                    {
+                        "pos": [750, 1650],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-32",
+                "track": [
+                    {
+                        "pos": [700, 1700],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-33",
+                "track": [
+                    {
+                        "pos": [650, 1750],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-34",
+                "track": [
+                    {
+                        "pos": [600, 1800],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-35",
+                "track": [
+                    {
+                        "pos": [550, 1850],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-36",
+                "track": [
+                    {
+                        "pos": [500, 1900],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-0-37",
+                "track": [
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    },
+                    {
+                        "pos": [400, 1950],
+                        "speed": [2, -2]
+                    },
+                    {
+                        "pos": [1300, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [1350, 1050],
+                        "speed": [-2, 2]
+                    },
+                    {
+                        "pos": [450, 1950],
+                        "speed": [-2, 0]
+                    }
+                ],
+                "size": [100, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-1-0",
+                "track": [
+                    {
+                        "pos": [2460, 1050],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 700],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 350],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 1400],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 1750],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [300, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-1-1",
+                "track": [
+                    {
+                        "pos": [2460, 700],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 350],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 0],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 1050],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 1400],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [300, 50],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-1-2",
+                "track": [
+                    {
+                        "pos": [2760, 700],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2760, 350],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2760, 0],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2760, 1050],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2760, 1400],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [50, 400],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e0-1-3",
+                "track": [
+                    {
+                        "pos": [2460, 750],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 400],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 50],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 1100],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [2460, 1450],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [20, 230],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e-b3-jump",
+                "track": [
+                    {
+                        "pos": [1650, 1940],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [1650, 1910],
+                        "speed": [0, 1]
+                    }
+                ],
+                "size": [150, 10],
+                "color": [30, 160, 240],
+                "update": ["pos"]
+            },
+            {
+                "name": "e-cable-bottom",
+                "track": [
+                    {
+                        "pos": [3025, 1720],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [3025, 550],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [6025, 550],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6027, 552],
+                        "speed": [2, 4]
+                    },
+                    {
+                        "pos": [6029, 556],
+                        "speed": [2, 6]
+                    },
+                    {
+                        "pos": [6031, 562],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6033, 570],
+                        "speed": [2, 10]
+                    },
+                    {
+                        "pos": [6035, 580],
+                        "speed": [2, 12]
+                    },
+                    {
+                        "pos": [6037, 592],
+                        "speed": [2, 14]
+                    },
+                    {
+                        "pos": [6039, 606],
+                        "speed": [2, 16]
+                    },
+                    {
+                        "pos": [6041, 622],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6043, 640],
+                        "speed": [2, 20]
+                    },
+                    {
+                        "pos": [6045, 660],
+                        "speed": [2, 22]
+                    },
+                    {
+                        "pos": [6047, 682],
+                        "speed": [2, 24]
+                    },
+                    {
+                        "pos": [6049, 706],
+                        "speed": [2, 26]
+                    },
+                    {
+                        "pos": [6051, 732],
+                        "speed": [2, 28]
+                    },
+                    {
+                        "pos": [6053, 760],
+                        "speed": [2, 30]
+                    },
+                    {
+                        "pos": [6055, 790],
+                        "speed": [2, 32]
+                    },
+                    {
+                        "pos": [6057, 822],
+                        "speed": [2, 34]
+                    },
+                    {
+                        "pos": [6059, 856],
+                        "speed": [2, 36]
+                    },
+                    {
+                        "pos": [6061, 892],
+                        "speed": [2, 38]
+                    },
+                    {
+                        "pos": [6063, 930],
+                        "speed": [2, 40]
+                    },
+                    {
+                        "pos": [6065, 970],
+                        "speed": [2, 42]
+                    },
+                    {
+                        "pos": [6067, 1012],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6069, 1020],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [6651, 1020],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6653, 1022],
+                        "speed": [2, 4]
+                    },
+                    {
+                        "pos": [6655, 1026],
+                        "speed": [2, 6]
+                    },
+                    {
+                        "pos": [6657, 1032],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6659, 1040],
+                        "speed": [2, 10]
+                    },
+                    {
+                        "pos": [6661, 1050],
+                        "speed": [2, 12]
+                    },
+                    {
+                        "pos": [6663, 1062],
+                        "speed": [2, 14]
+                    },
+                    {
+                        "pos": [6665, 1076],
+                        "speed": [2, 16]
+                    },
+                    {
+                        "pos": [6667, 1092],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6669, 1110],
+                        "speed": [2, 20]
+                    },
+                    {
+                        "pos": [6671, 1130],
+                        "speed": [2, 22]
+                    },
+                    {
+                        "pos": [6673, 1152],
+                        "speed": [2, 24]
+                    },
+                    {
+                        "pos": [6675, 1176],
+                        "speed": [2, 26]
+                    },
+                    {
+                        "pos": [6677, 1202],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6679, 1220],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [8915, 1220],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [200, 30],
+                "color": [12, 50, 124],
+                "update": ["pos"]
+            },
+            {
+                "name": "e-cable-top",
+                "track": [
+                    {
+                        "pos": [3025, 1520],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [3025, 350],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [6025, 350],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6027, 352],
+                        "speed": [2, 4]
+                    },
+                    {
+                        "pos": [6029, 356],
+                        "speed": [2, 6]
+                    },
+                    {
+                        "pos": [6031, 362],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6033, 370],
+                        "speed": [2, 10]
+                    },
+                    {
+                        "pos": [6035, 380],
+                        "speed": [2, 12]
+                    },
+                    {
+                        "pos": [6037, 392],
+                        "speed": [2, 14]
+                    },
+                    {
+                        "pos": [6039, 406],
+                        "speed": [2, 16]
+                    },
+                    {
+                        "pos": [6041, 422],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6043, 440],
+                        "speed": [2, 20]
+                    },
+                    {
+                        "pos": [6045, 460],
+                        "speed": [2, 22]
+                    },
+                    {
+                        "pos": [6047, 482],
+                        "speed": [2, 24]
+                    },
+                    {
+                        "pos": [6049, 506],
+                        "speed": [2, 26]
+                    },
+                    {
+                        "pos": [6051, 532],
+                        "speed": [2, 28]
+                    },
+                    {
+                        "pos": [6053, 560],
+                        "speed": [2, 30]
+                    },
+                    {
+                        "pos": [6055, 590],
+                        "speed": [2, 32]
+                    },
+                    {
+                        "pos": [6057, 622],
+                        "speed": [2, 34]
+                    },
+                    {
+                        "pos": [6059, 656],
+                        "speed": [2, 36]
+                    },
+                    {
+                        "pos": [6061, 692],
+                        "speed": [2, 38]
+                    },
+                    {
+                        "pos": [6063, 730],
+                        "speed": [2, 40]
+                    },
+                    {
+                        "pos": [6065, 770],
+                        "speed": [2, 42]
+                    },
+                    {
+                        "pos": [6067, 812],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6069, 820],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [6651, 820],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6653, 822],
+                        "speed": [2, 4]
+                    },
+                    {
+                        "pos": [6655, 826],
+                        "speed": [2, 6]
+                    },
+                    {
+                        "pos": [6657, 832],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6659, 840],
+                        "speed": [2, 10]
+                    },
+                    {
+                        "pos": [6661, 850],
+                        "speed": [2, 12]
+                    },
+                    {
+                        "pos": [6663, 862],
+                        "speed": [2, 14]
+                    },
+                    {
+                        "pos": [6665, 876],
+                        "speed": [2, 16]
+                    },
+                    {
+                        "pos": [6667, 892],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6669, 910],
+                        "speed": [2, 20]
+                    },
+                    {
+                        "pos": [6671, 930],
+                        "speed": [2, 22]
+                    },
+                    {
+                        "pos": [6673, 952],
+                        "speed": [2, 24]
+                    },
+                    {
+                        "pos": [6675, 976],
+                        "speed": [2, 26]
+                    },
+                    {
+                        "pos": [6677, 1002],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6679, 1020],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [8915, 1020],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [200, 30],
+                "color": [12, 50, 124],
+                "update": ["pos"]
+            },
+            {
+                "name": "e-cable-left",
+                "track": [
+                    {
+                        "pos": [3025, 1720],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [3025, 1380],
+                        "speed": [0, -2]
+                    },
+                    {
+                        "pos": [3025, 380],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [6025, 380],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6027, 382],
+                        "speed": [2, 4]
+                    },
+                    {
+                        "pos": [6029, 386],
+                        "speed": [2, 6]
+                    },
+                    {
+                        "pos": [6031, 392],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6033, 400],
+                        "speed": [2, 10]
+                    },
+                    {
+                        "pos": [6035, 410],
+                        "speed": [2, 12]
+                    },
+                    {
+                        "pos": [6037, 422],
+                        "speed": [2, 14]
+                    },
+                    {
+                        "pos": [6039, 436],
+                        "speed": [2, 16]
+                    },
+                    {
+                        "pos": [6041, 452],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6043, 470],
+                        "speed": [2, 20]
+                    },
+                    {
+                        "pos": [6045, 490],
+                        "speed": [2, 22]
+                    },
+                    {
+                        "pos": [6047, 512],
+                        "speed": [2, 24]
+                    },
+                    {
+                        "pos": [6049, 536],
+                        "speed": [2, 26]
+                    },
+                    {
+                        "pos": [6051, 562],
+                        "speed": [2, 28]
+                    },
+                    {
+                        "pos": [6053, 590],
+                        "speed": [2, 30]
+                    },
+                    {
+                        "pos": [6055, 620],
+                        "speed": [2, 32]
+                    },
+                    {
+                        "pos": [6057, 652],
+                        "speed": [2, 34]
+                    },
+                    {
+                        "pos": [6059, 686],
+                        "speed": [2, 36]
+                    },
+                    {
+                        "pos": [6061, 722],
+                        "speed": [2, 38]
+                    },
+                    {
+                        "pos": [6063, 760],
+                        "speed": [2, 40]
+                    },
+                    {
+                        "pos": [6065, 800],
+                        "speed": [2, 42]
+                    },
+                    {
+                        "pos": [6067, 842],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6069, 850],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [6651, 850],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6653, 852],
+                        "speed": [2, 4]
+                    },
+                    {
+                        "pos": [6655, 856],
+                        "speed": [2, 6]
+                    },
+                    {
+                        "pos": [6657, 862],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6659, 870],
+                        "speed": [2, 10]
+                    },
+                    {
+                        "pos": [6661, 880],
+                        "speed": [2, 12]
+                    },
+                    {
+                        "pos": [6663, 892],
+                        "speed": [2, 14]
+                    },
+                    {
+                        "pos": [6665, 906],
+                        "speed": [2, 16]
+                    },
+                    {
+                        "pos": [6667, 922],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6669, 940],
+                        "speed": [2, 20]
+                    },
+                    {
+                        "pos": [6671, 960],
+                        "speed": [2, 22]
+                    },
+                    {
+                        "pos": [6673, 982],
+                        "speed": [2, 24]
+                    },
+                    {
+                        "pos": [6675, 1006],
+                        "speed": [2, 26]
+                    },
+                    {
+                        "pos": [6677, 1032],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6679, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [8915, 1050],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [20, 170],
+                "color": [12, 50, 124],
+                "update": ["pos"]
+            },
+            {
+                "name": "e-cable-right",
+                "track": [
+                    {
+                        "pos": [3205, 1550],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [3205, 380],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [6205, 380],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6207, 382],
+                        "speed": [2, 4]
+                    },
+                    {
+                        "pos": [6209, 386],
+                        "speed": [2, 6]
+                    },
+                    {
+                        "pos": [6211, 392],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6213, 400],
+                        "speed": [2, 10]
+                    },
+                    {
+                        "pos": [6215, 410],
+                        "speed": [2, 12]
+                    },
+                    {
+                        "pos": [6217, 422],
+                        "speed": [2, 14]
+                    },
+                    {
+                        "pos": [6219, 436],
+                        "speed": [2, 16]
+                    },
+                    {
+                        "pos": [6221, 452],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6223, 470],
+                        "speed": [2, 20]
+                    },
+                    {
+                        "pos": [6225, 490],
+                        "speed": [2, 22]
+                    },
+                    {
+                        "pos": [6227, 512],
+                        "speed": [2, 24]
+                    },
+                    {
+                        "pos": [6229, 536],
+                        "speed": [2, 26]
+                    },
+                    {
+                        "pos": [6231, 562],
+                        "speed": [2, 28]
+                    },
+                    {
+                        "pos": [6233, 590],
+                        "speed": [2, 30]
+                    },
+                    {
+                        "pos": [6235, 620],
+                        "speed": [2, 32]
+                    },
+                    {
+                        "pos": [6237, 652],
+                        "speed": [2, 34]
+                    },
+                    {
+                        "pos": [6239, 686],
+                        "speed": [2, 36]
+                    },
+                    {
+                        "pos": [6241, 722],
+                        "speed": [2, 38]
+                    },
+                    {
+                        "pos": [6243, 760],
+                        "speed": [2, 40]
+                    },
+                    {
+                        "pos": [6245, 800],
+                        "speed": [2, 42]
+                    },
+                    {
+                        "pos": [6247, 842],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6249, 850],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [6831, 850],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6833, 852],
+                        "speed": [2, 4]
+                    },
+                    {
+                        "pos": [6835, 856],
+                        "speed": [2, 6]
+                    },
+                    {
+                        "pos": [6837, 862],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6839, 870],
+                        "speed": [2, 10]
+                    },
+                    {
+                        "pos": [6841, 880],
+                        "speed": [2, 12]
+                    },
+                    {
+                        "pos": [6843, 892],
+                        "speed": [2, 14]
+                    },
+                    {
+                        "pos": [6845, 906],
+                        "speed": [2, 16]
+                    },
+                    {
+                        "pos": [6847, 922],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6849, 940],
+                        "speed": [2, 20]
+                    },
+                    {
+                        "pos": [6851, 960],
+                        "speed": [2, 22]
+                    },
+                    {
+                        "pos": [6853, 982],
+                        "speed": [2, 24]
+                    },
+                    {
+                        "pos": [6855, 1006],
+                        "speed": [2, 26]
+                    },
+                    {
+                        "pos": [6857, 1032],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6859, 1050],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [9095, 1050],
+                        "speed": [0, 2]
+                    },
+                    {
+                        "pos": [9095, 1220],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [20, 170],
+                "color": [12, 50, 124],
+                "update": ["pos"]
+            },
+            {
+                "name": "e-cable-connect",
+                "track": [
+                    {
+                        "pos": [3110, 1470],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [3110, 300],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [6110, 300],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6110, 300],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6112, 302],
+                        "speed": [2, 4]
+                    },
+                    {
+                        "pos": [6114, 306],
+                        "speed": [2, 6]
+                    },
+                    {
+                        "pos": [6116, 312],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6118, 320],
+                        "speed": [2, 10]
+                    },
+                    {
+                        "pos": [6120, 330],
+                        "speed": [2, 12]
+                    },
+                    {
+                        "pos": [6122, 342],
+                        "speed": [2, 14]
+                    },
+                    {
+                        "pos": [6124, 356],
+                        "speed": [2, 16]
+                    },
+                    {
+                        "pos": [6126, 372],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6128, 390],
+                        "speed": [2, 20]
+                    },
+                    {
+                        "pos": [6130, 410],
+                        "speed": [2, 22]
+                    },
+                    {
+                        "pos": [6132, 432],
+                        "speed": [2, 24]
+                    },
+                    {
+                        "pos": [6134, 456],
+                        "speed": [2, 26]
+                    },
+                    {
+                        "pos": [6136, 482],
+                        "speed": [2, 28]
+                    },
+                    {
+                        "pos": [6138, 510],
+                        "speed": [2, 30]
+                    },
+                    {
+                        "pos": [6140, 540],
+                        "speed": [2, 32]
+                    },
+                    {
+                        "pos": [6142, 572],
+                        "speed": [2, 34]
+                    },
+                    {
+                        "pos": [6144, 606],
+                        "speed": [2, 36]
+                    },
+                    {
+                        "pos": [6146, 642],
+                        "speed": [2, 38]
+                    },
+                    {
+                        "pos": [6148, 680],
+                        "speed": [2, 40]
+                    },
+                    {
+                        "pos": [6150, 720],
+                        "speed": [2, 42]
+                    },
+                    {
+                        "pos": [6152, 762],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6154, 770],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [6736, 770],
+                        "speed": [2, 2]
+                    },
+                    {
+                        "pos": [6738, 772],
+                        "speed": [2, 4]
+                    },
+                    {
+                        "pos": [6740, 776],
+                        "speed": [2, 6]
+                    },
+                    {
+                        "pos": [6742, 782],
+                        "speed": [2, 8]
+                    },
+                    {
+                        "pos": [6744, 790],
+                        "speed": [2, 10]
+                    },
+                    {
+                        "pos": [6746, 800],
+                        "speed": [2, 12]
+                    },
+                    {
+                        "pos": [6748, 812],
+                        "speed": [2, 14]
+                    },
+                    {
+                        "pos": [6750, 826],
+                        "speed": [2, 16]
+                    },
+                    {
+                        "pos": [6752, 842],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6754, 860],
+                        "speed": [2, 20]
+                    },
+                    {
+                        "pos": [6756, 880],
+                        "speed": [2, 22]
+                    },
+                    {
+                        "pos": [6758, 902],
+                        "speed": [2, 24]
+                    },
+                    {
+                        "pos": [6760, 926],
+                        "speed": [2, 26]
+                    },
+                    {
+                        "pos": [6762, 952],
+                        "speed": [2, 18]
+                    },
+                    {
+                        "pos": [6764, 970],
+                        "speed": [2, 0]
+                    },
+                    {
+                        "pos": [9000, 970],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [30, 50],
+                "color": [12, 50, 124],
+                "update": ["pos"]
+            },
+            {
+                "name": "e-jump",
+                "track": [
+                    {
+                        "pos": [6650, 1940],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [6650, 1910],
+                        "speed": [0, 1]
+                    }
+                ],
+                "size": [50, 10],
+                "color": [30, 160, 240],
+                "update": ["pos"]
+            },
+            {
+                "name": "e2-0-0",
+                "track": [
+                    {
+                        "pos": [8300, 1260],
+                        "speed": [0, 0]
+                    },
+                    {
+                        "pos": [7200, 1260],
+                        "speed": [2, 0]
+                    }
+                ],
+                "size": [200, 30],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e2-1-0",
+                "track": [
+                    {
+                        "pos": [6010, 1850],
+                        "speed": [4, 0]
+                    },
+                    {
+                        "pos": [6410, 1850],
+                        "speed": [-4, 0]
+                    }
+                ],
+                "size": [100, 20],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            }
+        ],
+        "obstacle": [
+            {
+                "name": "o-ground",
+                "pos": [0, 1950],
+                "size": [10000, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-ceil",
+                "pos": [0, -10],
+                "size": [10000, 10],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-wall-left",
+                "pos": [-10, 0],
+                "size": [10, 2000],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-wall-right",
+                "pos": [10000, 0],
+                "size": [10, 2000],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-sep-0-1",
+                "pos": [2820, 0],
+                "size": [50, 1800],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-block-0",
+                "pos": [1615, 900],
+                "size": [20, 150],
+                "color": [0, 0, 192],
+                "update": ["name"]
+            },
+            {
+                "name": "o-block-1",
+                "pos": [2835, 1800],
+                "size": [20, 150],
+                "color": [0, 0, 192],
+                "update": ["name"]
+            },
+            {
+                "name": "o0-0-0",
+                "pos": [1400, 1050],
+                "size": [1050, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-0-1",
+                "pos": [0, 1050],
+                "size": [1000, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-0-2",
+                "pos": [1350, 1100],
+                "size": [100, 100],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-0-3",
+                "pos": [1250, 1150],
+                "size": [100, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-0-4",
+                "pos": [1150, 1250],
+                "size": [100, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-0-5",
+                "pos": [1050, 1350],
+                "size": [100, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-0-6",
+                "pos": [950, 1450],
+                "size": [100, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-0-7",
+                "pos": [850, 1550],
+                "size": [100, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-0-8",
+                "pos": [750, 1650],
+                "size": [100, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-0-9",
+                "pos": [650, 1750],
+                "size": [100, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-0-10",
+                "pos": [550, 1850],
+                "size": [100, 100],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-0",
+                "pos": [1600, 0],
+                "size": [50, 900],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-1",
+                "pos": [1650, 0],
+                "size": [800, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-2",
+                "pos": [1650, 350],
+                "size": [800, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-3",
+                "pos": [1650, 700],
+                "size": [800, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-4",
+                "pos": [2430, 50],
+                "size": [20, 230],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-5",
+                "pos": [2430, 400],
+                "size": [20, 230],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-6",
+                "pos": [2430, 750],
+                "size": [20, 230],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-7",
+                "pos": [1600, 1100],
+                "size": [50, 850],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-8",
+                "pos": [1650, 1400],
+                "size": [800, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-9",
+                "pos": [1800, 1750],
+                "size": [650, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-10",
+                "pos": [2430, 1100],
+                "size": [20, 230],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-1-11",
+                "pos": [2430, 1450],
+                "size": [20, 230],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-0",
+                "pos": [1940, 610],
+                "size": [200, 20],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-1",
+                "pos": [2025, 630],
+                "size": [30, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-2",
+                "pos": [2010, 680],
+                "size": [60, 20],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-3",
+                "pos": [1790, 550],
+                "size": [20, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-4",
+                "pos": [1810, 620],
+                "size": [60, 20],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-5",
+                "pos": [1870, 620],
+                "size": [20, 80],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-6",
+                "pos": [2270, 550],
+                "size": [20, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-7",
+                "pos": [2210, 620],
+                "size": [60, 20],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-8",
+                "pos": [2190, 620],
+                "size": [20, 80],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-lamp0",
+                "pos": [2025, 400],
+                "size": [30, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l1-lamp1",
+                "pos": [1960, 450],
+                "size": [160, 10],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l2-shelftop",
+                "pos": [1650, 110],
+                "size": [500, 20],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l2-shelfmid",
+                "pos": [1650, 230],
+                "size": [500, 20],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-l2-book1",
+                "pos": [1650, 170],
+                "size": [40, 60],
+                "color": [0, 25, 75]
+            },
+            {
+                "name": "o0-l2-book2",
+                "pos": [1690, 170],
+                "size": [40, 60],
+                "color": [200, 25, 75]
+            },
+            {
+                "name": "o0-l2-book3",
+                "pos": [1730, 170],
+                "size": [40, 60],
+                "color": [150, 150, 150]
+            },
+            {
+                "name": "o0-l2-book4",
+                "pos": [1770, 170],
+                "size": [40, 60],
+                "color": [240, 240, 240]
+            },
+            {
+                "name": "o0-l2-book5",
+                "pos": [1810, 170],
+                "size": [40, 60],
+                "color": [220, 220, 220]
+            },
+            {
+                "name": "o0-l2-book6",
+                "pos": [1850, 170],
+                "size": [40, 60],
+                "color": [20, 20, 20]
+            },
+            {
+                "name": "o0-l2-book7",
+                "pos": [1890, 170],
+                "size": [40, 60],
+                "color": [90, 20, 70]
+            },
+            {
+                "name": "o0-l2-book8",
+                "pos": [1930, 170],
+                "size": [40, 60],
+                "color": [220, 20, 105]
+            },
+            {
+                "name": "o0-l2-book9",
+                "pos": [1970, 170],
+                "size": [40, 60],
+                "color": [103, 180, 240]
+            },
+            {
+                "name": "o0-l2-book10",
+                "pos": [1650, 290],
+                "size": [40, 60],
+                "color": [25, 250, 200]
+            },
+            {
+                "name": "o0-l2-book11",
+                "pos": [1690, 290],
+                "size": [40, 60],
+                "color": [100, 25, 75]
+            },
+            {
+                "name": "o0-l2-book12",
+                "pos": [1730, 290],
+                "size": [40, 60],
+                "color": [227, 207, 75]
+            },
+            {
+                "name": "o0-l2-book13",
+                "pos": [1770, 290],
+                "size": [40, 60],
+                "color": [255, 155, 32]
+            },
+            {
+                "name": "o0-l2-book14",
+                "pos": [1810, 290],
+                "size": [40, 60],
+                "color": [0, 25, 75]
+            },
+            {
+                "name": "o0-l2-book15",
+                "pos": [1850, 290],
+                "size": [40, 60],
+                "color": [176, 25, 31]
+            },
+            {
+                "name": "o0-l2-book16",
+                "pos": [1890, 290],
+                "size": [40, 60],
+                "color": [200, 205, 205]
+            },
+            {
+                "name": "o0-l2-book17",
+                "pos": [1930, 290],
+                "size": [40, 60],
+                "color": [0, 199, 145]
+            },
+            {
+                "name": "o0-l2-book18",
+                "pos": [1970, 290],
+                "size": [40, 60],
+                "color": [125, 15, 95]
+            },
+            {
+                "name": "o0-l2-book19",
+                "pos": [2010, 290],
+                "size": [40, 60],
+                "color": [153, 151, 155]
+            },
+            {
+                "name": "o0-b1-0",
+                "pos": [1730, 1290],
+                "size": [120, 60],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-b1-1",
+                "pos": [1850, 1290],
+                "size": [60, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-b1-2",
+                "pos": [1910, 1290],
+                "size": [200, 60],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-b1-3",
+                "pos": [2110, 1290],
+                "size": [60, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-b1-4",
+                "pos": [2170, 1260],
+                "size": [30, 90],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-b1-5",
+                "pos": [1860, 1245],
+                "size": [30, 45],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-b1-6",
+                "pos": [1890, 1200],
+                "size": [250, 90],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-b1-7",
+                "pos": [2140, 1230],
+                "size": [30, 60],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-b1-8",
+                "pos": [2200, 1330],
+                "size": [70, 20],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-b1-9",
+                "pos": [2200, 1260],
+                "size": [70, 10],
+                "color": [0, 0, 192],
+                "update": ["pos"]
+            },
+            {
+                "name": "o0-b1-10",
+                "pos": [2260, 1270],
+                "size": [10, 60],
+                "color": [0, 0, 192],
+                "update": ["pos"]
+            },
+            {
+                "name": "o0-b1-wheel0",
+                "pos": [1860, 1340],
+                "size": [40, 60],
+                "color": [12, 50, 124]
+            },
+            {
+                "name": "o0-b1-wheel1",
+                "pos": [1850, 1350],
+                "size": [60, 40],
+                "color": [12, 50, 124]
+            },
+            {
+                "name": "o0-b1-wheel2",
+                "pos": [2120, 1340],
+                "size": [40, 60],
+                "color": [12, 50, 124]
+            },
+            {
+                "name": "o0-b1-wheel3",
+                "pos": [2110, 1350],
+                "size": [60, 40],
+                "color": [12, 50, 124]
+            },
+            {
+                "name": "o1-0-0",
+                "pos": [3000, 1750],
+                "size": [250, 200],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o1-0-1",
+                "pos": [3250, 1050],
+                "size": [400, 900],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o1-0-2",
+                "pos": [3650, 1450],
+                "size": [250, 500],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o1-0-3",
+                "pos": [3650, 1050],
+                "size": [200, 100],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o1-0-4",
+                "pos": [3110, 300],
+                "size": [3000, 10],
+                "color": [12, 50, 124]
+            },
+            {
+                "name": "o2-0-0",
+                "pos": [5400, 1450],
+                "size": [250, 500],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-1",
+                "pos": [5650, 1250],
+                "size": [200, 700],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-2",
+                "pos": [5850, 1050],
+                "size": [800, 600],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-3",
+                "pos": [6700, 1250],
+                "size": [400, 700],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-4",
+                "pos": [7000, 970],
+                "size": [2000, 10],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-5",
+                "pos": [8300, 1450],
+                "size": [300, 500],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-6",
+                "pos": [8600, 1250],
+                "size": [1400, 700],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-7",
+                "pos": [7800, 0],
+                "size": [300, 100],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-8",
+                "pos": [9500, 1050],
+                "size": [200, 250],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-9",
+                "pos": [9700, 800],
+                "size": [300, 450],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-10",
+                "pos": [5850, 1000],
+                "size": [200, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-11",
+                "pos": [6000, 960],
+                "size": [50, 40],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o2-0-12",
+                "pos": [5980, 1890],
+                "size": [30, 60],
+                "color": [0, 0, 128],
+                "update": ["name"]
+            },
+            {
+                "name": "o2-0-13",
+                "pos": [6510, 1890],
+                "size": [30, 60],
+                "color": [0, 0, 128]
+            }
+        ]
+    }
+}

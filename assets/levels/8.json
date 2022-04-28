@@ -1,0 +1,362 @@
+{
+    "player": {
+        "pos": [[1980, 940]],
+        "size": [40, 60],
+        "color": [255, 0, 0]
+    },
+    "map": {
+        "size": [4000, 1200],
+        "target": [
+            {
+                "name": "t0",
+                "pos": [1950, 1050],
+                "size": [100, 100],
+                "color": [240, 230, 140]
+            }
+        ],
+        "coin": [
+            {
+                "name": "c0",
+                "pos": [600, 1110],
+                "size": [10, 10],
+                "color": [255, 215, 0],
+                "update": ["name"]
+            },
+            {
+                "name": "c1",
+                "pos": [3255, 1030],
+                "size": [10, 10],
+                "color": [255, 215, 0],
+                "update": ["name"]
+            },
+            {
+                "name": "c2",
+                "pos": [2590, 1095],
+                "size": [10, 10],
+                "color": [255, 215, 0],
+                "update": ["name"]
+            }
+        ],
+        "switch": [
+            {
+                "name": "s1",
+                "pos": [3245, 965],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["remove", "o-block1"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s2",
+                "pos": [350, 100],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["remove", "o-block2"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s3",
+                "pos": [400, 1100],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["remove", "o-block3"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s4",
+                "pos": [3600, 100],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["remove", "o-block4"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s5",
+                "pos": [1605, 990],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["remove", "o-block5"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            },
+            {
+                "name": "s6",
+                "pos": [2610, 920],
+                "size": [30, 30],
+                "color": [102, 255, 178],
+                "command": {
+                    "close": [
+                        ["state", "open"],
+                        ["color", [62, 195, 128]],
+                        ["remove", "o-block6"]
+                    ],
+                    "open": [
+                        ["state", "open"]
+                    ]
+                },
+                "update": ["color"]
+            }
+        ],
+        "monster": [
+            {
+                "name": "m0-lava",
+                "track": [
+                    {
+                        "pos": [1110, 1100],
+                        "speed": [0, 0]
+                    }
+                ],
+                "size": [740, 50],
+                "color": [255, 128, 0]
+            },
+            {
+                "name": "m1",
+                "track": [
+                    {
+                        "pos": [530, 1090],
+                        "speed": [1, 0]
+                    },
+                    {
+                        "pos": [800, 1090],
+                        "speed": [-1, 0]
+                    }
+                ],
+                "size": [40, 60],
+                "color": [50, 205, 50],
+                "update": ["pos"]
+            },
+            {
+                "name": "m2",
+                "track": [
+                    {
+                        "pos": [3110, 1090],
+                        "speed": [1, 0]
+                    },
+                    {
+                        "pos": [3250, 1090],
+                        "speed": [-1, 0]
+                    }
+                ],
+                "size": [40, 60],
+                "color": [50, 205, 50],
+                "update": ["pos"]
+            },
+            {
+                "name": "m3",
+                "track": [
+                    {
+                        "pos": [3250, 890],
+                        "speed": [-1, 0]
+                    },
+                    {
+                        "pos": [3110, 890],
+                        "speed": [1, 0]
+                    }
+                ],
+                "size": [40, 60],
+                "color": [50, 205, 50],
+                "update": ["pos"]
+            }
+        ],
+        "elevator" : [
+            {
+                "name": "e0",
+                "track": [
+                    {
+                        "pos": [580, 200],
+                        "speed": [0, 2]
+                    },
+                    {
+                        "pos": [580, 970],
+                        "speed": [0, -2]
+                    }
+                ],
+                "size": [240, 40],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            },
+            {
+                "name": "e1",
+                "track": [
+                    {
+                        "pos": [3760, 1100],
+                        "speed": [0, -2]
+                    },
+                    {
+                        "pos": [3760, 200],
+                        "speed": [0, 2]
+                    }
+                ],
+                "size": [160, 30],
+                "color": [0, 0, 128],
+                "update": ["pos"]
+            }
+        ],
+        "obstacle": [
+            {
+                "name": "o-ground",
+                "pos": [0, 1150],
+                "size": [4000, 50],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-ceiling",
+                "pos": [0, -10],
+                "size": [4000, 10],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-wall-left",
+                "pos": [0, 0],
+                "size": [50, 1200],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-wall-right",
+                "pos": [3950, 0],
+                "size": [50, 1200],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-m-left",
+                "pos": [1850, 1000],
+                "size": [80, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-m-right",
+                "pos": [2070, 1000],
+                "size": [80, 150],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-block1",
+                "pos": [450, 0],
+                "size": [20, 150],
+                "color": [0, 0, 192],
+                "update": ["name"]
+            },
+            {
+                "name": "o-block2",
+                "pos": [3310, 1000],
+                "size": [20, 150],
+                "color": [0, 0, 192],
+                "update": ["name"]
+            },
+            {
+                "name": "o-block3",
+                "pos": [1930, 1000],
+                "size": [140, 20],
+                "color": [0, 0, 192],
+                "update": ["name"]
+            },
+            {
+                "name": "o-block4",
+                "pos": [500, 1000],
+                "size": [20, 150],
+                "color": [0, 0, 192],
+                "update": ["name"]
+            },
+            {
+                "name": "o-block5",
+                "pos": [1570, 1020],
+                "size": [100, 20],
+                "color": [0, 0, 192],
+                "update": ["name"]
+            },
+            {
+                "name": "o-block5-left",
+                "pos": [1310, 1020],
+                "size": [100, 20],
+                "color": [0, 0, 192]
+            },
+            {
+                "name": "o-block6",
+                "pos": [2520, 1050],
+                "size": [20, 100],
+                "color": [0, 0, 192],
+                "update": ["name"]
+            },
+            {
+                "name": "o-left-1",
+                "pos": [850, 970],
+                "size": [260, 180],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-left-2",
+                "pos": [250, 150],
+                "size": [300, 850],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-right-0",
+                "pos": [2500, 970],
+                "size": [150, 80],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-right-1",
+                "pos": [2650, 970],
+                "size": [100, 180],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-right-2",
+                "pos": [2750, 650],
+                "size": [350, 500],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-right-3",
+                "pos": [3300, 150],
+                "size": [400, 850],
+                "color": [0, 0, 128]
+            }
+        ]
+    }
+}

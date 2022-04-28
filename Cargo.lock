@@ -150,7 +150,7 @@ dependencies = [
  "objekt",
  "parking_lot 0.10.2",
  "rayon",
- "ron",
+ "ron 0.5.1",
  "serde",
 ]
 
@@ -178,7 +178,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "587b1ab5cec425194e727f229ff018d7c33a6af2a129ac6cd6243cedd06aef63"
 dependencies = [
  "log",
- "ron",
+ "ron 0.5.1",
  "serde",
 ]
 
@@ -314,7 +314,7 @@ dependencies = [
  "log",
  "palette",
  "rendy",
- "ron",
+ "ron 0.5.1",
  "serde",
  "smallvec 1.8.0",
  "static_assertions 1.1.0",
@@ -346,7 +346,7 @@ dependencies = [
  "log",
  "paste",
  "rand 0.7.3",
- "ron",
+ "ron 0.5.1",
  "serde",
  "smallvec 1.8.0",
  "unicode-normalization",
@@ -509,6 +509,12 @@ name = "base64"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b41b7ea54a0c9d92199de89e20e58d49f02f8e699814ef3fdf266f6f748d15c7"
+
+[[package]]
+name = "base64"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "904dfeac50f3cdaba28fc6f57fdcddb75f49ed61346676a78c4ffe55877802fd"
 
 [[package]]
 name = "bindgen"
@@ -2473,6 +2479,8 @@ dependencies = [
  "amethyst",
  "amethyst_rendy",
  "log",
+ "ron 0.7.0",
+ "serde",
 ]
 
 [[package]]
@@ -3255,6 +3263,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2ece421e0c4129b90e4a35b6f625e472e96c552136f5093a2f4fa2bbb75a62d5"
 dependencies = [
  "base64 0.10.1",
+ "bitflags",
+ "serde",
+]
+
+[[package]]
+name = "ron"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1b861ecaade43ac97886a512b360d01d66be9f41f3c61088b42cedf92e03d678"
+dependencies = [
+ "base64 0.13.0",
  "bitflags",
  "serde",
 ]

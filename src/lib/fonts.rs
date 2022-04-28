@@ -20,9 +20,8 @@ impl Fonts {
 
     pub fn instance() -> &'static mut Self {
         unsafe {
-            match INSTANCE {
-                None => { INSTANCE = Some(Fonts{ fonts: HashMap::default() }); }
-                _ => {}
+            if INSTANCE.is_none() {
+                INSTANCE = Some(Fonts{ fonts: HashMap::default() });
             }
             INSTANCE.as_mut().unwrap()
         }

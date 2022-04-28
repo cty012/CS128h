@@ -1,0 +1,146 @@
+{
+    "player": {
+        "pos": [[100, 690]],
+        "size": [40, 60],
+        "color": [255, 0, 0]
+    },
+    "map": {
+        "size": [3000, 820],
+        "target": [
+            {
+                "name": "t0",
+                "pos": [2800, 500],
+                "size": [100, 250],
+                "color": [240, 230, 140]
+            }
+        ],
+        "coin": [
+            {
+                "name": "c0",
+                "pos": [910, 715],
+                "size": [10, 10],
+                "color": [255, 215, 0],
+                "update": ["name"]
+            },
+            {
+                "name": "c1",
+                "pos": [1950, 280],
+                "size": [10, 10],
+                "color": [255, 215, 0],
+                "update": ["name"]
+            },
+            {
+                "name": "c2",
+                "pos": [1950, 370],
+                "size": [10, 10],
+                "color": [255, 215, 0],
+                "update": ["name"]
+            }
+        ],
+        "switch": [
+        ],
+        "monster": [
+            {
+                "name": "m0",
+                "track": [
+                    {
+                        "pos": [960, 690],
+                        "speed": [1, 0]
+                    },
+                    {
+                        "pos": [1450, 690],
+                        "speed": [-1, 0]
+                    }
+                ],
+                "size": [40, 60],
+                "color": [50, 205, 50],
+                "update": ["pos"]
+            }
+        ],
+        "elevator" : [
+            {
+                "name":"e0",
+                "track":[
+                    {
+                        "pos":[1630, 700],
+                        "speed":[0, -1]
+                    },
+                    {
+                        "pos":[1630, 200],
+                        "speed":[0, 1]
+                    }
+                ],
+                "size":[160, 40],
+                "color":[0, 0, 128],
+                "update": ["pos"]
+            }
+        ],
+        "obstacle": [
+            {
+                "name": "o-ground",
+                "pos": [0, 750],
+                "size": [3000, 70],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o-ceiling",
+                "pos": [0, -10],
+                "size": [3000, 10],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-left",
+                "pos": [600, 350],
+                "size": [250, 400],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o0-top",
+                "pos": [850, 350],
+                "size": [400, 250],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o1-left",
+                "pos": [1800, 150],
+                "size": [130, 600],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o1-top",
+                "pos": [1930, 150],
+                "size": [270, 100],
+                "color": [0, 0, 128]
+            },
+            {
+                "name": "o1-bottom",
+                "pos": [1930, 400],
+                "size": [270, 350],
+                "color": [0, 0, 128]
+            }
+        ],
+        "description": [
+            {
+                "name": "d-double-jump",
+                "pos": [400, 520],
+                "text": ["PRESS W TWICE TO", "DO A DOUBLE JUMP"],
+                "font": ["uasquared", 20],
+                "color": [128, 128, 128]
+            },
+            {
+                "name": "d-elevator",
+                "pos": [1550, 600],
+                "text": ["ElEVATORS CAN LIFT", "PLAYER TO HIGH PLACES"],
+                "font": ["uasquared", 20],
+                "color": [128, 128, 128]
+            },
+            {
+                "name": "d-elevator",
+                "pos": [1900, 50],
+                "text": ["YOU CANNOT JUMP", "HIGHER THAN THE MAP"],
+                "font": ["uasquared", 20],
+                "color": [128, 128, 128]
+            }
+        ]
+    }
+}

@@ -6,20 +6,21 @@ use amethyst::{
     window::ScreenDimensions,
 };
 
-#[path = "component.rs"] mod comp;
+#[path = "components.rs"] mod comp;
 #[path = "fonts.rs"] mod fonts;
 #[path = "utils.rs"] mod utils;
 
 // Camera
-// TODO: expand this into a camera entity
-pub fn init_camera(world: &mut World) {
+pub fn init_camera(world: &mut World, alpha: f32) {
     let dimensions = (*world.read_resource::<ScreenDimensions>()).clone();
     let mut transform = Transform::default();
-    transform.set_translation_xyz(dimensions.width() * 0.5, dimensions.height() * 0.5, 1.0);
+    transform.set_translation_xyz(dimensions.width() * 0.5, dimensions.height() * 0.5, 10.0);
+    world.register::<comp::CameraComp>();
 
     world.create_entity()
         .with(Camera::standard_2d(dimensions.width(), dimensions.height()))
         .with(transform)
+        .with(comp::CameraComp::new(alpha))
         .build();
 }
 

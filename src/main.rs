@@ -30,8 +30,9 @@ fn main() -> amethyst::Result<()> {
                 .with_clear([0.0, 0.0, 0.0, 1.0]))
             .with_plugin(RenderUi::default())
             .with_plugin(RenderFlat2D::default()))?;
+            // .with(lib::systems::CameraSystem, "camera_system", &[]);  #OBSOLETE#
 
-    let mut game = Application::new(resources_path, lib::MenuState::default(), game_data)?;
+    let mut game = Application::new(resources_path, lib::states::InitState::default(), game_data)?;
     game.run();
 
     Ok(())
