@@ -1,26 +1,37 @@
+use std::collections::HashMap;
 use amethyst::{
-    core::Transform,
-    ecs::{WorldExt, Join},
-    input::{InputHandler, StringBindings, InputEvent},
+    ecs::{ WorldExt, Join },
+    input::{ InputHandler, StringBindings, InputEvent, VirtualKeyCode },
     prelude::*,
-    renderer::Camera,
+    ui::{ Anchor, UiTransform },
     utils::application_root_dir,
     window::ScreenDimensions,
     winit::MouseButton,
 };
 
-#[path = "components.rs"] mod comp;
-#[path = "entities.rs"] mod entities;
-#[path = "map.rs"] mod map;
+use crate::lib::components;
+use crate::lib::entities;
+use crate::lib::map;
+use crate::lib::utils;
 
 // Init
 #[derive(Default)]
 pub struct InitState;
 
 impl SimpleState for InitState {
-    fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
-        data.world.register::<comp::CameraComp>();
-        data.world.register::<comp::PlayerComp>();
+    fn on_start(&mut self, mut data: StateData<'_, GameData<'_, '_>>) {
+        // register the components
+        data.world.register::<components::CameraComp>();
+        data.world.register::<components::MapComp>();
+        data.world.register::<components::PlayerComp>();
+        data.world.register::<components::ObjectComp>();
+        data.world.register::<components::MovableComp>();
+        data.world.register::<components::CollidableComp>();
+        data.world.register::<components::InteractableComp>();
+        data.world.register::<components::DescriptionComp>();
+
+        // camera only need to be initialized once
+        entities::init_camera(&mut data.world);
     }
     fn update(&mut self, _data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         Trans::Replace(Box::new(MenuState::default()))
@@ -35,18 +46,7 @@ pub struct MenuState {
 }
 
 impl SimpleState for MenuState {
-    fn on_start(&mut self, mut data: StateData<'_, GameData<'_, '_>>) {
-        // reinitialize the camera whenever a new state starts
-        // entities::init_camera(&mut data.world, 0.3);  // TODO: find out why this won't work (print resources)
-        let dimensions = (*data.world.read_resource::<ScreenDimensions>()).clone();
-        let mut transform = Transform::default();
-        transform.set_translation_xyz(dimensions.width() * 0.5, dimensions.height() * 0.5, 1.0);
-        data.world.create_entity()
-            .with(Camera::standard_2d(dimensions.width(), dimensions.height()))
-            .with(transform)
-            .with(comp::CameraComp::new(0.3))
-            .build();
-
+    fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         // instantiate the background and the title
         entities::Background::default().instantiate("background".to_string(), data.world);
         entities::Label::default(
@@ -80,7 +80,7 @@ impl SimpleState for MenuState {
                     if let Some(btn) = &self.b_level {
                         if btn.in_range(x, y) {
                             data.world.delete_all();
-                            return Trans::Replace(Box::new(LevelState::default()));
+                            return Trans::Replace(Box::new(LevelState::new(8)));
                         }
                     }
 
@@ -96,17 +96,6 @@ impl SimpleState for MenuState {
            _ => Trans::None
         }
     }
-
-    fn fixed_update(&mut self, data: StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
-        let cam_store = data.world.read_storage::<comp::CameraComp>();
-        let mut trans_store = data.world.write_storage::<Transform>();
-        for (trans, cam) in (&mut trans_store, &cam_store).join() {
-            println!("found!");
-        }
-        println!(".");
-
-        Trans::None
-    }
 }
 
 // Level
@@ -117,18 +106,15 @@ pub struct LevelState {
     b_games: Vec<Option<entities::Button>>,  // all 8 level selection buttons
 }
 
+impl LevelState {
+    fn new(num_levels: usize) -> Self {
+        LevelState { num_levels, b_menu: None, b_games: vec![] }
+    }
+}
+
 impl SimpleState for LevelState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
-        // reinitialize the camera whenever a new state starts
         self.num_levels = 8;
-        let dimensions = (*data.world.read_resource::<ScreenDimensions>()).clone();
-        let mut transform = Transform::default();
-        transform.set_translation_xyz(dimensions.width() * 0.5, dimensions.height() * 0.5, 1.0);
-        data.world.create_entity()
-            .with(Camera::standard_2d(dimensions.width(), dimensions.height()))
-            .with(transform)
-            .with(comp::CameraComp::new(0.3))
-            .build();
 
         // instantiate the background and the title
         entities::Background::default().instantiate("background".to_string(), data.world);
@@ -196,11 +182,68 @@ impl SimpleState for LevelState {
 pub struct GameState {
     level: u32,
     map: Option<map::Map>,
+    alpha: f32,
 }
 
 impl GameState {
     fn new(level: u32) -> Self {
-        GameState { level, map: None }
+        GameState { level, map: None, alpha: 0.1 }
+    }
+
+    /// This function allows the camera to follow the player
+    fn follow_player(&mut self, data: &StateData<'_, GameData<'_, '_>>, alpha: f32) {
+        // access the storage
+        let dimensions = (*data.world.read_resource::<ScreenDimensions>()).clone();
+        let mut uitrans_store = data.world.write_storage::<UiTransform>();
+        let map_store = data.world.write_storage::<components::MapComp>();
+        let player_store = data.world.write_storage::<components::PlayerComp>();
+
+        // find the player's position
+        let mut found = false;
+        let mut target_x: f32 = 0.;
+        let mut target_y: f32 = 0.;
+        for (uitrans, _player) in (&uitrans_store, &player_store).join() {
+            // The local position of the player has anchor bottomleft and pivot topleft.
+            // The target postion is a vector that shows the required displacement of the map
+            // such that the player can be centered.
+            target_x = dimensions.width() * 0.5 - uitrans.local_x - uitrans.width * 0.5;
+            target_y = dimensions.height() * 0.5 - uitrans.local_y + uitrans.height * 0.5;
+            found = true;
+            break;
+        }
+
+        // if the player is not found then there is some problem
+        if !found { println!("WARNING: PLAYER NOT FOUND!"); return; }
+
+        // center the player by moving the map (by a percentage)
+        for (uitrans, _map) in (&mut uitrans_store, &map_store).join() {
+            // truncate the target position such that it is inside the map
+            target_x = target_x.min(0.).max(dimensions.width() - uitrans.width);
+            target_y = target_y.min(0.).max(dimensions.height() - uitrans.height);
+            uitrans.local_x -= (uitrans.local_x - target_x) * alpha;
+            uitrans.local_y -= (uitrans.local_y - target_y) * alpha;
+        }
+    }
+
+    fn get_rel_pos(&self, data: &StateData<'_, GameData<'_, '_>>) -> HashMap<String, Anchor> {
+        let uitrans_store = data.world.read_storage::<UiTransform>();
+        let player_store = data.world.read_storage::<components::PlayerComp>();
+        let obj_store = data.world.read_storage::<components::ObjectComp>();
+
+        let mut result = HashMap::new();
+
+        let mut player_uitrans: Option<&UiTransform> = None;
+        for (uitrans, _player) in (&uitrans_store, &player_store).join() {
+            player_uitrans = Some(uitrans);
+            break;
+        }
+
+        for (uitrans, obj) in (&uitrans_store, &obj_store).join() {
+            result.insert(obj.name.clone(),
+                utils::compare(player_uitrans.unwrap().clone(), uitrans.clone()));
+        }
+
+        result
     }
 }
 
@@ -217,29 +260,107 @@ impl SimpleState for GameState {
         map.initialize(&mut data.world);
 
         // center camera
-        todo!();  // make a camera component that follows the player
+        self.follow_player(&data, self.alpha);
     }
 
     fn handle_event(&mut self, data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {
-        // check pause events
-        todo!();
+        // check pause events TODO
         
         Trans::None
     }
 
-    fn fixed_update(&mut self, _data: StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
-        // physics system
-        todo!();
+    fn fixed_update(&mut self, data: StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+        // get relative position
+        let rel_pos = self.get_rel_pos(&data);
+
+        // access the storage
+        let input = data.world.read_resource::<InputHandler<StringBindings>>();
+        let mut uitrans_store = data.world.write_storage::<UiTransform>();
+        let mut player_store = data.world.write_storage::<components::PlayerComp>();
+        let obj_store = data.world.read_storage::<components::ObjectComp>();
+        let mut movable_store = data.world.write_storage::<components::MovableComp>();
+        let collidable_store = data.world.read_storage::<components::CollidableComp>();
+
+        // find the player
+        let mut _player_comp: Option<&mut components::PlayerComp> = None;
+        for (_uitrans, player) in (&uitrans_store, &mut player_store).join() {
+            _player_comp = Some(player);
+            break;
+        }
+
+        // if the player is not found then there is some problem
+        if _player_comp.is_none() { println!("WARNING: PLAYER NOT FOUND!"); return Trans::None; }
+        let player_comp = _player_comp.unwrap();
+
+        // update player status
+        player_comp.speed.0 = 0;
+        if input.key_is_down(VirtualKeyCode::A) {
+            player_comp.speed.0 -= utils::PLAYER_SPEED;
+        }
+        if input.key_is_down(VirtualKeyCode::D) {
+            player_comp.speed.0 += utils::PLAYER_SPEED;
+        }
+        if input.key_is_down(VirtualKeyCode::W) {
+            if player_comp.can_jump && player_comp.jump_count > 0 {
+                player_comp.speed.1 = utils::PLAYER_JUMP;
+                player_comp.can_jump = false;
+                player_comp.jump_count -= 1;
+            }
+        } else {
+            player_comp.can_jump = true;
+        }
+
+        // find movables and move them (and player)
+        let mut movables: Vec<&mut components::MovableComp> = Vec::new();
+        for (_uitrans, movable) in (&mut uitrans_store, &mut movable_store).join() {
+            movables.push(movable);
+        }
+        for movable in movables.iter_mut() { movable.move_(&obj_store, &mut uitrans_store); }
+        player_comp.move_(&obj_store, &mut uitrans_store);
+
+        // resolve collision (by changing the position of the player)
+        // will not deal with the case that the player is squeezed between two collidables
+        // the squeeze feature will be implemented in later versions
+
+        let mut _player_uitrans: Option<UiTransform> = None;
+        let mut target = (0., 0.);
+        for (uitrans, obj) in (&uitrans_store, &obj_store).join() {
+            if obj.name == player_comp.name {
+                _player_uitrans = Some(uitrans.clone());
+                target = (uitrans.local_x, uitrans.local_y);
+                break;
+            }
+        }
+        let player_uitrans = _player_uitrans.unwrap();
+        for (uitrans, collidable) in (&uitrans_store, &collidable_store).join() {
+            if utils::compare(player_uitrans.clone(), uitrans.clone()) == Anchor::Middle {  // TODO: get player moving track
+                let direction = utils::anchor_to_tuple(rel_pos[&collidable.name]);
+                if direction.0 != 0 {
+                    target.0 = uitrans.local_x
+                        + 0.5 * (direction.0 + 1) as f32 * uitrans.width
+                        + 0.5 * (direction.0 - 1) as f32 * player_uitrans.width;  // player modifier
+                    player_comp.speed.0 = 0;
+                }
+                if direction.1 != 0 {
+                    target.1 = uitrans.local_y
+                        + 0.5 * (direction.1 - 1) as f32 * uitrans.height
+                        + 0.5 * (direction.1 + 1) as f32 * player_uitrans.height;
+                    player_comp.speed.1 = 0;
+                    player_comp.jump_count = 2;
+                }
+            }
+        }
+        for (uitrans, _player) in (&mut uitrans_store, &player_store).join() {
+            uitrans.local_x = target.0;
+            uitrans.local_y = target.1;
+        }
 
         // center camera
-        todo!();
-
-        // let cam_store = data.world.read_storage::<comp::CameraComp>();
-        // let mut trans_store = data.world.write_storage::<Transform>();
-        // for (trans, cam) in (&mut trans_store, &cam_store).join() {
-        //     println!("found!");
-        // }
-        // println!(".");
+        drop(input);
+        drop(uitrans_store);
+        drop(player_store);
+        drop(movable_store);
+        self.follow_player(&data, self.alpha);
 
         Trans::None
     }

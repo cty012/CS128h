@@ -3,12 +3,12 @@ use amethyst::{
     core::Parent,
     ecs::Entity,
     prelude::*,
-    ui::{Anchor, LineMode, UiImage, UiText, UiTransform},
+    ui::{ Anchor, LineMode, UiImage, UiText, UiTransform },
 };
 
-#[path = "components.rs"] mod comp;
-#[path = "fonts.rs"] mod fonts;
-#[path = "utils.rs"] mod utils;
+use crate::lib::components;
+use crate::lib::fonts;
+use crate::lib::utils;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Map {
@@ -31,6 +31,7 @@ impl Map {
                 0., 0., 0.,
                 self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
             .with(UiImage::SolidColor(utils::get_color(utils::BACKGROUND_COLOR)))
+            .with(components::MapComp::default())
             .build();
         self.player.initialize(&mut world, &map_ent);
         for target in self.targets.iter() {
@@ -73,6 +74,8 @@ impl Player {
                 self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
+            .with(components::ObjectComp::new("player".to_string(), components::ObjectType::Player))
+            .with(components::PlayerComp::new("player".to_string()))
             .with(Parent::new(*parent))
             .build();
     }
@@ -95,6 +98,8 @@ impl Target {
                 self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
+            .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Target))
+            .with(components::InteractableComp::new(self.name.clone()))
             .with(Parent::new(*parent))
             .build();
     }
@@ -117,6 +122,8 @@ impl Coin {
                 self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
+            .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Coin))
+            .with(components::InteractableComp::new(self.name.clone()))
             .with(Parent::new(*parent))
             .build();
     }
@@ -139,6 +146,8 @@ impl Switch {
                 self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
+            .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Switch))
+            .with(components::InteractableComp::new(self.name.clone()))
             .with(Parent::new(*parent))
             .build();
     }
@@ -161,6 +170,9 @@ impl Monster {
                 self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
+            .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Monster))
+            .with(components::MovableComp::new(self.name.clone(), self.track.clone()))
+            .with(components::InteractableComp::new(self.name.clone()))
             .with(Parent::new(*parent))
             .build();
     }
@@ -183,6 +195,9 @@ impl Elevator {
                 self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
+            .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Elevator))
+            .with(components::MovableComp::new(self.name.clone(), self.track.clone()))
+            .with(components::CollidableComp::new(self.name.clone()))
             .with(Parent::new(*parent))
             .build();
     }
@@ -205,6 +220,8 @@ impl Obstacle {
                 self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
+            .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Obstacle))
+            .with(components::CollidableComp::new(self.name.clone()))
             .with(Parent::new(*parent))
             .build();
     }
@@ -234,12 +251,13 @@ impl Description {
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255]),
                 self.font.size as f32 * utils::DPI,
                 LineMode::Wrap, Anchor::Middle))
+            .with(components::DescriptionComp::default())
             .with(Parent::new(*parent))
             .build();
     }
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct Track {
     pub pos: (i32, i32),
     pub speed: (i32, i32),

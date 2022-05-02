@@ -6,21 +6,20 @@ use amethyst::{
     window::ScreenDimensions,
 };
 
-#[path = "components.rs"] mod comp;
-#[path = "fonts.rs"] mod fonts;
-#[path = "utils.rs"] mod utils;
+use crate::lib::components;
+use crate::lib::fonts;
+use crate::lib::utils;
 
 // Camera
-pub fn init_camera(world: &mut World, alpha: f32) {
+pub fn init_camera(world: &mut World) {
     let dimensions = (*world.read_resource::<ScreenDimensions>()).clone();
     let mut transform = Transform::default();
     transform.set_translation_xyz(dimensions.width() * 0.5, dimensions.height() * 0.5, 10.0);
-    world.register::<comp::CameraComp>();
 
     world.create_entity()
         .with(Camera::standard_2d(dimensions.width(), dimensions.height()))
         .with(transform)
-        .with(comp::CameraComp::new(alpha))
+        .with(components::CameraComp::default())
         .build();
 }
 
@@ -116,8 +115,8 @@ impl Button {
         }
     }
 
-    pub fn get_pos(&self, anchor: Anchor) -> (f32, f32) {
-        let x = match anchor {
+    pub fn get_pos(&self, pivot: Anchor) -> (f32, f32) {
+        let x = match pivot {
             Anchor::TopLeft | Anchor::MiddleLeft | Anchor::BottomLeft => {
                 self.pos[0] - self.label.width * utils::DPI * 0.5
             }
@@ -128,7 +127,7 @@ impl Button {
                 self.pos[0] + self.label.width * utils::DPI * 0.5
             }
         };
-        let y = match anchor {
+        let y = match pivot {
             Anchor::TopLeft | Anchor::TopMiddle | Anchor::TopRight => {
                 self.pos[1] + self.label.height * utils::DPI * 0.5
             }
