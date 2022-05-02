@@ -304,7 +304,7 @@ impl SimpleState for GameState {
             if player_comp.can_jump && player_comp.jump_count > 0 {
                 player_comp.speed.1 = utils::PLAYER_JUMP;
                 player_comp.can_jump = false;
-                player_comp.jump_count -= 1;
+                if !player_comp.on_ground { player_comp.jump_count -= 1; }
             }
         } else {
             player_comp.can_jump = true;
@@ -332,21 +332,23 @@ impl SimpleState for GameState {
             }
         }
         let player_uitrans = _player_uitrans.unwrap();
+        player_comp.on_ground = false;
         for (uitrans, collidable) in (&uitrans_store, &collidable_store).join() {
             if utils::compare(player_uitrans.clone(), uitrans.clone()) == Anchor::Middle {  // TODO: get player moving track
                 let direction = utils::anchor_to_tuple(rel_pos[&collidable.name]);
-                if direction.0 != 0 {
-                    target.0 = uitrans.local_x
-                        + 0.5 * (direction.0 + 1) as f32 * uitrans.width
-                        + 0.5 * (direction.0 - 1) as f32 * player_uitrans.width;  // player modifier
-                    player_comp.speed.0 = 0;
-                }
                 if direction.1 != 0 {
                     target.1 = uitrans.local_y
                         + 0.5 * (direction.1 - 1) as f32 * uitrans.height
                         + 0.5 * (direction.1 + 1) as f32 * player_uitrans.height;
                     player_comp.speed.1 = 0;
-                    player_comp.jump_count = 2;
+                    player_comp.on_ground = true;
+                    player_comp.jump_count = 1;
+                }
+                else if direction.0 != 0 {
+                    target.0 = uitrans.local_x
+                        + 0.5 * (direction.0 + 1) as f32 * uitrans.width
+                        + 0.5 * (direction.0 - 1) as f32 * player_uitrans.width;  // player modifier
+                    player_comp.speed.0 = 0;
                 }
             }
         }

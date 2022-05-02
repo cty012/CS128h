@@ -32,6 +32,7 @@ impl Component for MapComp {
 pub struct PlayerComp {
     pub name: String,
     pub can_jump: bool,
+    pub on_ground: bool,
     pub jump_count: i32,
     pub speed: (i32, i32),
     pub last_pos: Option<(i32, i32)>,
@@ -43,7 +44,10 @@ impl Component for PlayerComp {
 
 impl PlayerComp {
     pub fn new(name: String) -> Self {
-        PlayerComp { name, can_jump: false, jump_count: 0, speed: (0, 0), last_pos: None }
+        PlayerComp {
+            name, can_jump: false, on_ground: false,
+            jump_count: 0, speed: (0, 0), last_pos: None
+        }
     }
 
     pub fn move_(&mut self,
@@ -146,7 +150,7 @@ impl CollidableComp {
 }
 
 pub struct InteractableComp {
-    name: String,
+    pub name: String,
 }
 
 impl Component for InteractableComp {
