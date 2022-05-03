@@ -534,11 +534,11 @@ impl SimpleState for PauseState {
     }
 
     fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
-        data.world.delete_entity(self.ent_bg.unwrap());
-        data.world.delete_entity(self.ent_title.unwrap());
-        data.world.delete_entity(self.ent_status.unwrap());
-        data.world.delete_entity(self.ent_b_game.unwrap());
-        data.world.delete_entity(self.ent_b_menu.unwrap());
+        data.world.delete_entity(self.ent_bg.unwrap()).unwrap_or(());
+        data.world.delete_entity(self.ent_title.unwrap()).unwrap_or(());
+        data.world.delete_entity(self.ent_status.unwrap()).unwrap_or(());
+        data.world.delete_entity(self.ent_b_game.unwrap()).unwrap_or(());
+        data.world.delete_entity(self.ent_b_menu.unwrap()).unwrap_or(());
     }
 
     fn handle_event(&mut self, data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {
