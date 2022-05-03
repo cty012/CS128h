@@ -24,6 +24,7 @@ pub const CAMERA_ALPHA: f32 = 0.1;
 pub const PLAYER_SPEED: i32 = 8;
 pub const PLAYER_JUMP: i32 = 30;
 pub const GRAVITY: i32 = 2;
+pub const LOWER_BOUND: i32 = -200;
 
 pub fn anchor_to_tuple(anchor: Anchor) -> (i32, i32) {
     match anchor {

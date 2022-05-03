@@ -189,15 +189,37 @@ impl Default for GameStatus {
 #[derive(Default)]
 pub struct GameState {
     level: u32,
+    scoreboard: entities::Scoreboard,
     map: Option<map::Map>,
 }
 
 impl GameState {
     fn new(level: u32) -> Self {
-        GameState { level, map: None }
+        GameState { level, scoreboard: entities::Scoreboard::default(), map: None }
     }
 
-    /// This function allows the camera to follow the player
+    // delete an object with the name
+    fn remove_objs(&mut self, world: &mut World, names: Vec<String>) {
+        let obj_store = world.read_storage::<components::ObjectComp>();
+        let mut entities_to_be_removed: Vec<Entity> = vec![];
+        for entity in (world.entities()).join() {
+            match obj_store.get(entity) {
+                Some(obj) => {
+                    if names.contains(&obj.name) {
+                        entities_to_be_removed.push(entity.clone());
+                    }
+                }
+                None => {}
+            }
+        }
+
+        drop(obj_store);
+        for ent in entities_to_be_removed.iter() {
+            world.delete_entity(*ent).expect("Entity does not exist");
+        }
+    }
+
+    // this function allows the camera to follow the player
     fn follow_player(&mut self, data: &StateData<'_, GameData<'_, '_>>, alpha: f32) {
         // access the storage
         let dimensions = (*data.world.read_resource::<ScreenDimensions>()).clone();
@@ -254,6 +276,67 @@ impl GameState {
 
         result
     }
+
+    fn check_win(&mut self, data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+        // access the storage
+        let uitrans_store = data.world.read_storage::<UiTransform>();
+        let player_store = data.world.read_storage::<components::PlayerComp>();
+        let obj_store = data.world.read_storage::<components::ObjectComp>();
+        let inter_store = data.world.read_storage::<components::InteractableComp>();
+
+        // find the player
+        let mut _player_uitrans: Option<&UiTransform> = None;
+        for (uitrans, _player) in (&uitrans_store, &player_store).join() {
+            _player_uitrans = Some(uitrans);
+            break;
+        }
+        let player_uitrans = _player_uitrans.unwrap();
+
+        // check if player is out of bounds
+        if player_uitrans.local_y < utils::LOWER_BOUND as f32 * utils::DPI {
+            return Trans::Push(Box::new(PauseState::new(self.level, GameStatus::Lose, self.scoreboard.score)));
+        }
+
+        // check if collide with enemy, target, or coin
+        for (uitrans, _inter, obj) in (&uitrans_store, &inter_store, &obj_store).join() {
+            match obj.type_ {
+                components::ObjectType::Monster => {
+                    if utils::compare(player_uitrans.clone(), uitrans.clone()) == Anchor::Middle {
+                        return Trans::Push(Box::new(PauseState::new(self.level, GameStatus::Lose, self.scoreboard.score)));
+                    }
+                }
+                components::ObjectType::Target => {
+                    if utils::compare(player_uitrans.clone(), uitrans.clone()) == Anchor::Middle {
+                        return Trans::Push(Box::new(PauseState::new(self.level, GameStatus::Win, self.scoreboard.score)));
+                    }
+                }
+                _ => {}
+            }
+        }
+
+        let mut coins_to_remove: Vec<String> = vec![];
+        // check if collide with enemy, target, or coin
+        for (uitrans, _inter, obj) in (&uitrans_store, &inter_store, &obj_store).join() {
+            match obj.type_ {
+                components::ObjectType::Coin => {
+                    if utils::compare(player_uitrans.clone(), uitrans.clone()) == Anchor::Middle {
+                        // remove this object
+                        coins_to_remove.push(obj.name.clone());
+                    }
+                }
+                _ => {}
+            }
+        }
+
+        drop(uitrans_store);
+        drop(player_store);
+        drop(obj_store);
+        drop(inter_store);
+        self.scoreboard.add_score(data.world, coins_to_remove.len() as i32);
+        self.remove_objs(&mut data.world, coins_to_remove);
+
+        Trans::None
+    }
 }
 
 impl SimpleState for GameState {
@@ -268,6 +351,9 @@ impl SimpleState for GameState {
         let map = self.map.as_ref().unwrap();
         map.initialize(&mut data.world);
 
+        // initialize scoreboard
+        self.scoreboard.instantiate("scoreboard".to_string(), data.world, 50., -60., 1.5);
+
         // center camera
         self.follow_player(&data, utils::CAMERA_ALPHA);
     }
@@ -275,14 +361,14 @@ impl SimpleState for GameState {
     fn handle_event(&mut self, _data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {
         if let StateEvent::Window(wevent) = &event {
             if is_key_down(&wevent, VirtualKeyCode::Escape) {
-                return Trans::Push(Box::new(PauseState::new(self.level, GameStatus::None)));
+                return Trans::Push(Box::new(PauseState::new(self.level, GameStatus::None, self.scoreboard.score)));
             }
         }
 
         Trans::None
     }
 
-    fn fixed_update(&mut self, data: StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+    fn fixed_update(&mut self, mut data: StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
         // get relative position
         let rel_pos = self.get_rel_pos(&data);
 
@@ -334,7 +420,6 @@ impl SimpleState for GameState {
         // resolve collision (by changing the position of the player)
         // will not deal with the case that the player is squeezed between two collidables
         // the squeeze feature will be implemented in later versions
-
         let mut _player_uitrans: Option<UiTransform> = None;
         let mut target = (0., 0.);
         for (uitrans, obj) in (&uitrans_store, &obj_store).join() {
@@ -365,6 +450,8 @@ impl SimpleState for GameState {
                 }
             }
         }
+
+        // update resolved player position
         for (uitrans, _player) in (&mut uitrans_store, &player_store).join() {
             uitrans.local_x = target.0;
             uitrans.local_y = target.1;
@@ -375,9 +462,12 @@ impl SimpleState for GameState {
         drop(uitrans_store);
         drop(player_store);
         drop(movable_store);
+        drop(obj_store);
+        drop(collidable_store);
         self.follow_player(&data, utils::CAMERA_ALPHA);
 
-        Trans::None
+        // check win or lose
+        self.check_win(&mut data)
     }
 }
 
@@ -387,19 +477,21 @@ impl SimpleState for GameState {
 pub struct PauseState {
     level: u32,
     status: GameStatus,
+    score: i32,
     b_game: Option<entities::Button>,  // resume/replay button data
     b_menu: Option<entities::Button>,  // main menu button data
     ent_bg: Option<Entity>,  // the corresponding entities
     ent_title: Option<Entity>,
+    ent_status: Option<Entity>,
     ent_b_game: Option<Entity>,
     ent_b_menu: Option<Entity>,
 }
 
 impl PauseState {
-    pub fn new(level: u32, status: GameStatus) -> Self {
+    pub fn new(level: u32, status: GameStatus, score: i32) -> Self {
         PauseState {
-            level, status, b_game: None, b_menu: None,
-            ent_bg: None, ent_title: None, ent_b_game: None, ent_b_menu: None
+            level, status, score, b_game: None, b_menu: None,
+            ent_bg: None, ent_title: None, ent_status: None, ent_b_game: None, ent_b_menu: None
         }
     }
 }
@@ -407,30 +499,46 @@ impl PauseState {
 impl SimpleState for PauseState {
     fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
         // decide displayed messages
-        let (title_msg, b_game_msg, bg_color) = match self.status {
-            GameStatus::Win => { ("You Win", "replay", [192, 64, 64, 192]) }
-            GameStatus::Lose => { ("You Lost", "replay", [64, 64, 192, 192]) }
-            GameStatus::None => { ("Paused", "resume", [192, 192, 192, 192]) }
+        let title_msg = "Level ".to_string() + &self.level.to_string();
+        let score_msg = "Score: ".to_string() + &self.score.to_string();
+        let (status_msg, b_game_msg, bg_color) = match self.status {
+            GameStatus::Win => { ("You Win!", "Replay", [192, 128, 128, 192]) }
+            GameStatus::Lose => { ("You Lost!", "Replay", [128, 128, 192, 192]) }
+            GameStatus::None => { ("Paused", "Resume", [192, 192, 192, 128]) }
         };
 
         // instantiate the background and the title
-        self.ent_bg = Some(entities::Background::new(utils::get_color([128, 128, 128, 128]))
+        self.ent_bg = Some(entities::Background::new(utils::get_color(bg_color))
             .instantiate_z("background".to_string(), data.world, 2.));
         self.ent_title = Some(entities::Label::default(
-            title_msg.to_string(), 600., 150., "cambria.ttf".to_string(), 60.)
+            title_msg, 600., 200., "cambria.ttf".to_string(), 60.)
             .instantiate("title".to_string(), data.world, 0., 150., 3.));
+        self.ent_status = Some(entities::Label::default(
+            status_msg.to_string(), 600., 200., "cambria.ttf".to_string(), 25.)
+            .instantiate("title".to_string(), data.world, 0., 90., 3.));
+        self.ent_status = Some(entities::Label::default(
+            score_msg.to_string(), 600., 200., "cambria.ttf".to_string(), 25.)
+            .instantiate("title".to_string(), data.world, 0., 50., 3.));
 
         // instantiate the scoreboard TODO
 
         // instantiate the buttons
         self.b_game = Some(entities::Button::default(
-            b_game_msg.to_string(), 220., 50., "merriweather.ttf".to_string(), 25.));
+            b_game_msg.to_string(), 260., 50., "merriweather.ttf".to_string(), 25.));
         self.ent_b_game = Some(
-            self.b_game.as_mut().unwrap().instantiate("game".to_string(), data.world, 0., 0., 3.));
+            self.b_game.as_mut().unwrap().instantiate("game".to_string(), data.world, 0., -20., 3.));
         self.b_menu = Some(entities::Button::default(
-            "exit to menu".to_string(), 220., 50., "merriweather.ttf".to_string(), 25.));
+            "Exit to menu".to_string(), 260., 50., "merriweather.ttf".to_string(), 25.));
         self.ent_b_menu = Some(
-            self.b_menu.as_mut().unwrap().instantiate("menu".to_string(), data.world, 0., -100., 3.));
+            self.b_menu.as_mut().unwrap().instantiate("menu".to_string(), data.world, 0., -120., 3.));
+    }
+
+    fn on_stop(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        data.world.delete_entity(self.ent_bg.unwrap());
+        data.world.delete_entity(self.ent_title.unwrap());
+        data.world.delete_entity(self.ent_status.unwrap());
+        data.world.delete_entity(self.ent_b_game.unwrap());
+        data.world.delete_entity(self.ent_b_menu.unwrap());
     }
 
     fn handle_event(&mut self, data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {
@@ -441,10 +549,6 @@ impl SimpleState for PauseState {
         // check if unpause
         if let StateEvent::Window(wevent) = &event {
             if is_key_down(&wevent, VirtualKeyCode::Escape) {
-                data.world.delete_entity(self.ent_bg.unwrap()).unwrap();
-                data.world.delete_entity(self.ent_title.unwrap()).unwrap();
-                data.world.delete_entity(self.ent_b_game.unwrap()).unwrap();
-                data.world.delete_entity(self.ent_b_menu.unwrap()).unwrap();
                 return Trans::Pop;
             }
         }
@@ -462,13 +566,7 @@ impl SimpleState for PauseState {
                     if let Some(btn) = &self.b_game {
                         if btn.in_range(x, y) {
                             match self.status {
-                                GameStatus::None => {
-                                    data.world.delete_entity(self.ent_bg.unwrap()).unwrap();
-                                    data.world.delete_entity(self.ent_title.unwrap()).unwrap();
-                                    data.world.delete_entity(self.ent_b_game.unwrap()).unwrap();
-                                    data.world.delete_entity(self.ent_b_menu.unwrap()).unwrap();
-                                    return Trans::Pop;
-                                }
+                                GameStatus::None => { return Trans::Pop; }
                                 _ => { 
                                     data.world.delete_all();
                                     return Trans::Replace(Box::new(GameState::new(self.level)));

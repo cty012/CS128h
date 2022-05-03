@@ -97,6 +97,39 @@ impl Label {
     }
 }
 
+// Scoreboard
+#[derive(Default)]
+pub struct Scoreboard {
+    pub score: i32,
+    pub entity: Option<Entity>,
+}
+
+impl Scoreboard {
+    pub fn instantiate(&mut self, id: String, world: &mut World, x: f32, y: f32, z: f32) -> Entity {
+        let font = fonts::Fonts::instance().get("digital-7-mono.ttf".to_string(), world);
+
+        self.entity = Some(world.create_entity()
+            .with(UiTransform::new(
+                id, Anchor::TopLeft, Anchor::MiddleLeft,
+                x * utils::DPI, y * utils::DPI, z,
+                200. * utils::DPI, 80. * utils::DPI))
+            .with(UiText::new(
+                font.clone(), "Score: 0".to_string(),
+                utils::get_color(utils::BLACK), 20. * utils::DPI,
+                LineMode::Single, Anchor::MiddleLeft))
+            .build());
+
+        self.entity.unwrap()
+    }
+
+    pub fn add_score(&mut self, world: &mut World, num: i32) {
+        self.score += num;
+        if self.entity.is_none() { return; }
+        world.write_storage::<UiText>().get_mut(self.entity.unwrap()).unwrap()
+            .text = "Score: ".to_string() + &self.score.to_string();
+    }
+}
+
 // Button
 pub struct Button {
     pos: [f32; 3],
