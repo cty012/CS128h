@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use amethyst::{
-    ecs::{ WorldExt, Join },
-    input::{ InputHandler, StringBindings, InputEvent, VirtualKeyCode },
+    ecs::{ WorldExt, Join, Entity },
+    input::{ InputHandler, StringBindings, InputEvent, VirtualKeyCode, is_key_down },
     prelude::*,
     ui::{ Anchor, UiTransform },
     utils::application_root_dir,
@@ -51,7 +51,7 @@ impl SimpleState for MenuState {
         entities::Background::default().instantiate("background".to_string(), data.world);
         entities::Label::default(
             "Platformer with RUST".to_string(), 600., 150., "cambria.ttf".to_string(), 60.)
-            .instantiate("title1".to_string(), data.world, 0., 200., 1.);
+            .instantiate("title".to_string(), data.world, 0., 200., 1.);
 
         // instantiate the buttons
         self.b_level = Some(entities::Button::default(
@@ -178,16 +178,23 @@ impl SimpleState for LevelState {
 }
 
 // Game
+pub enum GameStatus {
+    Win, Lose, None,
+}
+
+impl Default for GameStatus {
+    fn default() -> Self { GameStatus::None }
+}
+
 #[derive(Default)]
 pub struct GameState {
     level: u32,
     map: Option<map::Map>,
-    alpha: f32,
 }
 
 impl GameState {
     fn new(level: u32) -> Self {
-        GameState { level, map: None, alpha: 0.1 }
+        GameState { level, map: None }
     }
 
     /// This function allows the camera to follow the player
@@ -217,11 +224,13 @@ impl GameState {
 
         // center the player by moving the map (by a percentage)
         for (uitrans, _map) in (&mut uitrans_store, &map_store).join() {
-            // truncate the target position such that it is inside the map
-            target_x = target_x.min(0.).max(dimensions.width() - uitrans.width);
-            target_y = target_y.min(0.).max(dimensions.height() - uitrans.height);
-            uitrans.local_x -= (uitrans.local_x - target_x) * alpha;
-            uitrans.local_y -= (uitrans.local_y - target_y) * alpha;
+            // lerp the camera position to get a smooth camera movement
+            // the target position is truncated AFTER the lerp to maintain the speed of the camera movement
+            // which helps remind the player that the end of the map is reached
+            uitrans.local_x = (uitrans.local_x - (uitrans.local_x - target_x) * alpha)
+                .min(0.).max(dimensions.width() - uitrans.width);
+            uitrans.local_y = (uitrans.local_y - (uitrans.local_y - target_y) * alpha)
+                .min(0.).max(dimensions.height() - uitrans.height);
         }
     }
 
@@ -260,12 +269,16 @@ impl SimpleState for GameState {
         map.initialize(&mut data.world);
 
         // center camera
-        self.follow_player(&data, self.alpha);
+        self.follow_player(&data, utils::CAMERA_ALPHA);
     }
 
-    fn handle_event(&mut self, data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {
-        // check pause events TODO
-        
+    fn handle_event(&mut self, _data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {
+        if let StateEvent::Window(wevent) = &event {
+            if is_key_down(&wevent, VirtualKeyCode::Escape) {
+                return Trans::Push(Box::new(PauseState::new(self.level, GameStatus::None)));
+            }
+        }
+
         Trans::None
     }
 
@@ -362,10 +375,119 @@ impl SimpleState for GameState {
         drop(uitrans_store);
         drop(player_store);
         drop(movable_store);
-        self.follow_player(&data, self.alpha);
+        self.follow_player(&data, utils::CAMERA_ALPHA);
 
         Trans::None
     }
 }
 
 // TODO: Add a new pause state (also deal with win/lose situation)
+// Game
+#[derive(Default)]
+pub struct PauseState {
+    level: u32,
+    status: GameStatus,
+    b_game: Option<entities::Button>,  // resume/replay button data
+    b_menu: Option<entities::Button>,  // main menu button data
+    ent_bg: Option<Entity>,  // the corresponding entities
+    ent_title: Option<Entity>,
+    ent_b_game: Option<Entity>,
+    ent_b_menu: Option<Entity>,
+}
+
+impl PauseState {
+    pub fn new(level: u32, status: GameStatus) -> Self {
+        PauseState {
+            level, status, b_game: None, b_menu: None,
+            ent_bg: None, ent_title: None, ent_b_game: None, ent_b_menu: None
+        }
+    }
+}
+
+impl SimpleState for PauseState {
+    fn on_start(&mut self, data: StateData<'_, GameData<'_, '_>>) {
+        // decide displayed messages
+        let (title_msg, b_game_msg, bg_color) = match self.status {
+            GameStatus::Win => { ("You Win", "replay", [192, 64, 64, 192]) }
+            GameStatus::Lose => { ("You Lost", "replay", [64, 64, 192, 192]) }
+            GameStatus::None => { ("Paused", "resume", [192, 192, 192, 192]) }
+        };
+
+        // instantiate the background and the title
+        self.ent_bg = Some(entities::Background::new(utils::get_color([128, 128, 128, 128]))
+            .instantiate_z("background".to_string(), data.world, 2.));
+        self.ent_title = Some(entities::Label::default(
+            title_msg.to_string(), 600., 150., "cambria.ttf".to_string(), 60.)
+            .instantiate("title".to_string(), data.world, 0., 150., 3.));
+
+        // instantiate the scoreboard TODO
+
+        // instantiate the buttons
+        self.b_game = Some(entities::Button::default(
+            b_game_msg.to_string(), 220., 50., "merriweather.ttf".to_string(), 25.));
+        self.ent_b_game = Some(
+            self.b_game.as_mut().unwrap().instantiate("game".to_string(), data.world, 0., 0., 3.));
+        self.b_menu = Some(entities::Button::default(
+            "exit to menu".to_string(), 220., 50., "merriweather.ttf".to_string(), 25.));
+        self.ent_b_menu = Some(
+            self.b_menu.as_mut().unwrap().instantiate("menu".to_string(), data.world, 0., -100., 3.));
+    }
+
+    fn handle_event(&mut self, data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {
+        let dimensions = (*data.world.read_resource::<ScreenDimensions>()).clone();
+        let (w, h) = (dimensions.width(), dimensions.height());
+        let mouse_pos = data.world.read_resource::<InputHandler<StringBindings>>().mouse_position();
+
+        // check if unpause
+        if let StateEvent::Window(wevent) = &event {
+            if is_key_down(&wevent, VirtualKeyCode::Escape) {
+                data.world.delete_entity(self.ent_bg.unwrap()).unwrap();
+                data.world.delete_entity(self.ent_title.unwrap()).unwrap();
+                data.world.delete_entity(self.ent_b_game.unwrap()).unwrap();
+                data.world.delete_entity(self.ent_b_menu.unwrap()).unwrap();
+                return Trans::Pop;
+            }
+        }
+
+        // check if click buttons
+        match event {
+            // if the user clicks the left mouse button
+            StateEvent::Input(InputEvent::MouseButtonPressed(MouseButton::Left)) => {
+                if let Some((mut x, mut y)) = mouse_pos {
+                    // converts to game coords
+                    x -= w * 0.5;
+                    y = h * 0.5 - y;
+
+                    // if user clicks game button
+                    if let Some(btn) = &self.b_game {
+                        if btn.in_range(x, y) {
+                            match self.status {
+                                GameStatus::None => {
+                                    data.world.delete_entity(self.ent_bg.unwrap()).unwrap();
+                                    data.world.delete_entity(self.ent_title.unwrap()).unwrap();
+                                    data.world.delete_entity(self.ent_b_game.unwrap()).unwrap();
+                                    data.world.delete_entity(self.ent_b_menu.unwrap()).unwrap();
+                                    return Trans::Pop;
+                                }
+                                _ => { 
+                                    data.world.delete_all();
+                                    return Trans::Replace(Box::new(GameState::new(self.level)));
+                                }
+                            }
+                        }
+                    }
+
+                    // if user clicks menu button
+                    if let Some(btn) = &self.b_menu {
+                        if btn.in_range(x, y) {
+                            data.world.delete_all();
+                            return Trans::Replace(Box::new(MenuState::default()));
+                        }
+                    }
+                }
+                Trans::None
+            }
+            _ => Trans::None
+        }
+    }
+}

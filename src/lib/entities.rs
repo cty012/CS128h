@@ -1,5 +1,6 @@
 use amethyst::{
-    core::Transform,
+    core::{ Transform, Parent },
+    ecs::Entity,
     prelude::*,
     renderer::Camera,
     ui::{ Anchor, LineMode, UiImage, UiText, UiTransform },
@@ -37,15 +38,24 @@ impl Background {
         Background { color }
     }
 
-    pub fn instantiate(&self, id: String, world: &mut World) -> &Self {
+    pub fn instantiate(&self, id: String, world: &mut World) -> Entity {
         let dimensions = (*world.read_resource::<ScreenDimensions>()).clone();
         world.create_entity()
             .with(UiTransform::new(
                 id, Anchor::Middle, Anchor::Middle,
                 0., 0., 0., dimensions.width(), dimensions.height()))
             .with(UiImage::SolidColor(self.color.clone()))
-            .build();
-        self
+            .build()
+    }
+
+    pub fn instantiate_z(&self, id: String, world: &mut World, z: f32) -> Entity {
+        let dimensions = (*world.read_resource::<ScreenDimensions>()).clone();
+        world.create_entity()
+            .with(UiTransform::new(
+                id, Anchor::Middle, Anchor::Middle,
+                0., 0., z, dimensions.width(), dimensions.height()))
+            .with(UiImage::SolidColor(self.color.clone()))
+            .build()
     }
 }
 
@@ -72,7 +82,7 @@ impl Label {
         Label { text, width, height, color, font_size, font_family }
     }
 
-    pub fn instantiate(&self, id: String, world: &mut World, x: f32, y: f32, z: f32) -> &Self {
+    pub fn instantiate(&self, id: String, world: &mut World, x: f32, y: f32, z: f32) -> Entity {
         let font = fonts::Fonts::instance().get(self.font_family.clone(), world);
 
         world.create_entity()
@@ -83,9 +93,7 @@ impl Label {
             .with(UiText::new(
                 font.clone(), self.text.clone(), self.color.clone(), self.font_size * utils::DPI,
                 LineMode::Single, Anchor::Middle))
-            .build();
-        
-        self
+            .build()
     }
 }
 
@@ -147,38 +155,48 @@ impl Button {
         return x > x_min && x < x_max && y > y_min && y < y_max;
     }
 
-    pub fn instantiate(&mut self, id: String, world: &mut World, x: f32, y: f32, z: f32) -> &Self {
+    pub fn instantiate(&mut self, id: String, world: &mut World, x: f32, y: f32, z: f32) -> Entity {
         self.pos = [x * utils::DPI, y * utils::DPI, z];
 
         let font = fonts::Fonts::instance().get(self.label.font_family.clone(), world);
 
+        // parent
+        let button = world.create_entity()
+            .with(UiTransform::new(
+                id.clone(), Anchor::Middle, Anchor::Middle,
+                0., 0., 0., 0., 0.))
+            .build();
+
         // frame
         world.create_entity()
             .with(UiTransform::new(
-                id.clone(), Anchor::Middle, Anchor::Middle,
+                id.clone() + "-frame", Anchor::Middle, Anchor::Middle,
                 x * utils::DPI, y * utils::DPI, z - 0.2, self.label.width + 5., self.label.height + 5.))
             .with(UiImage::SolidColor(self.fr_color.clone()))
+            .with(Parent::new(button))
             .build();
 
         // background
         world.create_entity()
             .with(UiTransform::new(
-                id.clone(), Anchor::Middle, Anchor::Middle,
+                id.clone() + "-bg", Anchor::Middle, Anchor::Middle,
                 x * utils::DPI, y * utils::DPI, z - 0.1, self.label.width, self.label.height))
             .with(UiImage::SolidColor(self.bg_color.clone()))
+            .with(Parent::new(button))
             .build();
         
         // text
         world.create_entity()
             .with(UiTransform::new(
-                id, Anchor::Middle, Anchor::Middle,
+                id + "-text", Anchor::Middle, Anchor::Middle,
                 x * utils::DPI, y * utils::DPI, z,
                 self.label.width * utils::DPI, self.label.height * utils::DPI))
             .with(UiText::new(
                 font.clone(), self.label.text.clone(), self.label.color.clone(),
                 self.label.font_size * utils::DPI, LineMode::Single, Anchor::Middle))
+            .with(Parent::new(button))
             .build();
 
-        self
+        button
     }
 }

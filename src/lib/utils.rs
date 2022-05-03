@@ -20,6 +20,7 @@ pub fn get_color([r, g, b, a]: [u32; 4]) -> [f32; 4] {
     [new_r, new_g, new_b, a as f32 / 255.]
 }
 
+pub const CAMERA_ALPHA: f32 = 0.1;
 pub const PLAYER_SPEED: i32 = 8;
 pub const PLAYER_JUMP: i32 = 30;
 pub const GRAVITY: i32 = 2;

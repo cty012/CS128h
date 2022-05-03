@@ -116,8 +116,8 @@
     descriptions: [
         (
             name: "d-double-jump",
-            pos: (400, 300),
-            size: (200, 200),
+            pos: (500, 300),
+            size: (180, 100),
             text: "PRESS W TWICE TO DO A DOUBLE JUMP",
             font: (
                 family: "uasquared.ttf",
@@ -127,8 +127,8 @@
         ),
         (
             name: "d-elevator",
-            pos: (1550, 220),
-            size: (200, 200),
+            pos: (1700, 220),
+            size: (180, 100),
             text: "ElEVATORS CAN LIFT PLAYER TO HIGH PLACES",
             font: (
                 family: "uasquared.ttf",
@@ -138,8 +138,8 @@
         ),
         (
             name: "d-elevator",
-            pos: (1900, 770),
-            size: (200, 200),
+            pos: (2000, 770),
+            size: (180, 100),
             text: "YOU CANNOT JUMP HIGHER THAN THE MAP",
             font: (
                 family: "uasquared.ttf",
