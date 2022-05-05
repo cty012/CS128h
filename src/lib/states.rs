@@ -510,6 +510,7 @@ pub struct PauseState {
     ent_bg: Option<Entity>,  // the corresponding entities
     ent_title: Option<Entity>,
     ent_status: Option<Entity>,
+    ent_score: Option<Entity>,
     ent_b_game: Option<Entity>,
     ent_b_menu: Option<Entity>,
 }
@@ -518,7 +519,8 @@ impl PauseState {
     pub fn new(level: u32, status: GameStatus, score: i32) -> Self {
         PauseState {
             level, status, score, b_game: None, b_menu: None,
-            ent_bg: None, ent_title: None, ent_status: None, ent_b_game: None, ent_b_menu: None
+            ent_bg: None, ent_title: None, ent_status: None,
+            ent_score: None, ent_b_game: None, ent_b_menu: None
         }
     }
 }
@@ -542,10 +544,10 @@ impl SimpleState for PauseState {
             .instantiate("title".to_string(), data.world, 0., 150., 3.));
         self.ent_status = Some(entities::Label::default(
             status_msg.to_string(), 600., 200., "cambria.ttf".to_string(), 25.)
-            .instantiate("title".to_string(), data.world, 0., 90., 3.));
-        self.ent_status = Some(entities::Label::default(
+            .instantiate("status".to_string(), data.world, 0., 90., 3.));
+        self.ent_score = Some(entities::Label::default(
             score_msg.to_string(), 600., 200., "cambria.ttf".to_string(), 25.)
-            .instantiate("title".to_string(), data.world, 0., 50., 3.));
+            .instantiate("score".to_string(), data.world, 0., 50., 3.));
 
         // instantiate the scoreboard TODO
 
@@ -564,6 +566,7 @@ impl SimpleState for PauseState {
         data.world.delete_entity(self.ent_bg.unwrap()).unwrap_or(());
         data.world.delete_entity(self.ent_title.unwrap()).unwrap_or(());
         data.world.delete_entity(self.ent_status.unwrap()).unwrap_or(());
+        data.world.delete_entity(self.ent_score.unwrap()).unwrap_or(());
         data.world.delete_entity(self.ent_b_game.unwrap()).unwrap_or(());
         data.world.delete_entity(self.ent_b_menu.unwrap()).unwrap_or(());
     }
@@ -576,7 +579,10 @@ impl SimpleState for PauseState {
         // check if unpause
         if let StateEvent::Window(wevent) = &event {
             if is_key_down(&wevent, VirtualKeyCode::Escape) {
-                return Trans::Pop;
+                match self.status {
+                    GameStatus::None => { return Trans::Pop; }
+                    _ => {}
+                }
             }
         }
 
