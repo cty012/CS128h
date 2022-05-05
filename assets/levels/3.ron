@@ -263,7 +263,7 @@
     descriptions: [
         (
             name: "d-lava",
-            pos: (600, 290),
+            pos: (650, 290),
             size: (180, 100),
             text: "JUMP OVER THE LAVA",
             font: (
@@ -274,7 +274,7 @@
         ),
         (
             name: "d-switch",
-            pos: (1520, 540),
+            pos: (1520, 520),
             size: (180, 100),
             text: "BUTTONS CAN ALTER THE MAP IN A CERTAIN WAY",
             font: (

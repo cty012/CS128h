@@ -136,6 +136,12 @@ impl SimpleState for LevelState {
             b_game.as_mut().unwrap().instantiate("exit".to_string(), data.world, x, y, 1.);
             self.b_games.push(b_game);
         }
+
+        // A note
+        entities::Label::default(
+            "*Note: currently only the first 3 levels are made".to_string(),
+            800., 150., "merriweather.ttf".to_string(), 24.,)
+                .instantiate("title".to_string(), data.world, 0., -270., 1.);
     }
 
     fn handle_event(&mut self, data: StateData<'_, GameData<'_, '_>>, event: StateEvent) -> SimpleTrans {

@@ -126,6 +126,17 @@
             color: (128, 128, 128),
         ),
         (
+            name: "d-single-jump",
+            pos: (1300, 580),
+            size: (180, 100),
+            text: "IF YOU WALK OFF A CLIFF YOU CAN ONLY JUMP ONCE",
+            font: (
+                family: "uasquared.ttf",
+                size: 20,
+            ),
+            color: (128, 128, 128),
+        ),
+        (
             name: "d-elevator",
             pos: (1700, 220),
             size: (180, 100),
@@ -137,7 +148,7 @@
             color: (128, 128, 128),
         ),
         (
-            name: "d-elevator",
+            name: "d-ceiling",
             pos: (2000, 770),
             size: (180, 100),
             text: "YOU CANNOT JUMP HIGHER THAN THE MAP",

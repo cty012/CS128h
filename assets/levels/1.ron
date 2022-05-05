@@ -121,7 +121,7 @@
         ),
         (
             name: "d-target",
-            pos: (2700, 350),
+            pos: (2800, 380),
             size: (200, 200),
             text: "REACH THE TARGET TO WIN THE GAME",
             font: (

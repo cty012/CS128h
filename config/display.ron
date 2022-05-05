@@ -1,4 +1,6 @@
 (
     title: "Platformer with rust",
     dimensions: Some((1280, 720)),
+    resizable: false,
+    icon: Some("assets/imgs/icon.ico"),
 )
