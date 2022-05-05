@@ -20,6 +20,9 @@ pub struct InitState;
 
 impl SimpleState for InitState {
     fn on_start(&mut self, mut data: StateData<'_, GameData<'_, '_>>) {
+        // set dpi
+        utils::set_dpi(data.world.read_resource::<ScreenDimensions>().height() / 720.);
+
         // register the components
         data.world.register::<components::CameraComp>();
         data.world.register::<components::MapComp>();
@@ -299,7 +302,7 @@ impl GameState {
         let player_uitrans = _player_uitrans.unwrap();
 
         // check if player is out of bounds
-        if player_uitrans.local_y < utils::LOWER_BOUND as f32 * utils::DPI {
+        if player_uitrans.local_y < utils::LOWER_BOUND as f32 * utils::dpi() {
             return Trans::Push(Box::new(PauseState::new(self.level, GameStatus::Lose, self.scoreboard.score)));
         }
 

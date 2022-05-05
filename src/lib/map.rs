@@ -30,7 +30,7 @@ impl Map {
             .with(UiTransform::new(
                 "map".to_string(), Anchor::BottomLeft, Anchor::BottomLeft,
                 0., 0., 0.,
-                self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
+                self.size.0 as f32 * utils::dpi(), self.size.1 as f32 * utils::dpi()))
             .with(UiImage::SolidColor(utils::get_color(utils::BACKGROUND_COLOR)))
             .with(components::MapComp::default())
             .build();
@@ -71,8 +71,8 @@ impl Player {
         world.create_entity()
             .with(UiTransform::new(
                 "player".to_string(), Anchor::BottomLeft, Anchor::TopLeft,
-                self.pos.0 as f32 * utils::DPI, self.pos.1 as f32 * utils::DPI, 0.7,
-                self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
+                self.pos.0 as f32 * utils::dpi(), self.pos.1 as f32 * utils::dpi(), 0.7,
+                self.size.0 as f32 * utils::dpi(), self.size.1 as f32 * utils::dpi()))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new("player".to_string(), components::ObjectType::Player))
@@ -95,8 +95,8 @@ impl Target {
         world.create_entity()
             .with(UiTransform::new(
                 self.name.clone(), Anchor::BottomLeft, Anchor::TopLeft,
-                self.pos.0 as f32 * utils::DPI, self.pos.1 as f32 * utils::DPI, 0.2,
-                self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
+                self.pos.0 as f32 * utils::dpi(), self.pos.1 as f32 * utils::dpi(), 0.2,
+                self.size.0 as f32 * utils::dpi(), self.size.1 as f32 * utils::dpi()))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Target))
@@ -119,8 +119,8 @@ impl Coin {
         world.create_entity()
             .with(UiTransform::new(
                 self.name.clone(), Anchor::BottomLeft, Anchor::TopLeft,
-                self.pos.0 as f32 * utils::DPI, self.pos.1 as f32 * utils::DPI, 0.6,
-                self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
+                self.pos.0 as f32 * utils::dpi(), self.pos.1 as f32 * utils::dpi(), 0.6,
+                self.size.0 as f32 * utils::dpi(), self.size.1 as f32 * utils::dpi()))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Coin))
@@ -144,8 +144,8 @@ impl Switch {
         world.create_entity()
             .with(UiTransform::new(
                 self.name.clone(), Anchor::BottomLeft, Anchor::TopLeft,
-                self.pos.0 as f32 * utils::DPI, self.pos.1 as f32 * utils::DPI, 0.4,
-                self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
+                self.pos.0 as f32 * utils::dpi(), self.pos.1 as f32 * utils::dpi(), 0.4,
+                self.size.0 as f32 * utils::dpi(), self.size.1 as f32 * utils::dpi()))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Switch))
@@ -168,8 +168,9 @@ impl Monster {
         world.create_entity()
             .with(UiTransform::new(
                 self.name.clone(), Anchor::BottomLeft, Anchor::TopLeft,
-                self.track[0].pos.0 as f32 * utils::DPI, self.track[0].pos.1 as f32 * utils::DPI, 0.5,
-                self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
+                self.track[0].pos.0 as f32 * utils::dpi(),
+                self.track[0].pos.1 as f32 * utils::dpi(), 0.5,
+                self.size.0 as f32 * utils::dpi(), self.size.1 as f32 * utils::dpi()))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Monster))
@@ -193,8 +194,9 @@ impl Elevator {
         world.create_entity()
             .with(UiTransform::new(
                 self.name.clone(), Anchor::BottomLeft, Anchor::TopLeft,
-                self.track[0].pos.0 as f32 * utils::DPI, self.track[0].pos.1 as f32 * utils::DPI, 0.3,
-                self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
+                self.track[0].pos.0 as f32 * utils::dpi(),
+                self.track[0].pos.1 as f32 * utils::dpi(), 0.3,
+                self.size.0 as f32 * utils::dpi(), self.size.1 as f32 * utils::dpi()))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Elevator))
@@ -218,8 +220,8 @@ impl Obstacle {
         world.create_entity()
             .with(UiTransform::new(
                 self.name.clone(), Anchor::BottomLeft, Anchor::TopLeft,
-                self.pos.0 as f32 * utils::DPI, self.pos.1 as f32 * utils::DPI, 0.1,
-                self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
+                self.pos.0 as f32 * utils::dpi(), self.pos.1 as f32 * utils::dpi(), 0.1,
+                self.size.0 as f32 * utils::dpi(), self.size.1 as f32 * utils::dpi()))
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Obstacle))
@@ -246,12 +248,12 @@ impl Description {
         world.create_entity()
             .with(UiTransform::new(
                 self.name.clone(), Anchor::BottomLeft, Anchor::Middle,
-                self.pos.0 as f32 * utils::DPI, self.pos.1 as f32 * utils::DPI, 0.11,
-                self.size.0 as f32 * utils::DPI, self.size.1 as f32 * utils::DPI))
+                self.pos.0 as f32 * utils::dpi(), self.pos.1 as f32 * utils::dpi(), 0.11,
+                self.size.0 as f32 * utils::dpi(), self.size.1 as f32 * utils::dpi()))
             .with(UiText::new(
                 font.clone(), self.text.clone(),
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255]),
-                self.font.size as f32 * utils::DPI,
+                self.font.size as f32 * utils::dpi(),
                 LineMode::Wrap, Anchor::Middle))
             .with(components::DescriptionComp::default())
             .with(Parent::new(*parent))

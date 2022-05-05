@@ -88,10 +88,10 @@ impl Label {
         world.create_entity()
             .with(UiTransform::new(
                 id, Anchor::Middle, Anchor::Middle,
-                x * utils::DPI, y * utils::DPI, z,
-                self.width * utils::DPI, self.height * utils::DPI))
+                x * utils::dpi(), y * utils::dpi(), z,
+                self.width * utils::dpi(), self.height * utils::dpi()))
             .with(UiText::new(
-                font.clone(), self.text.clone(), self.color.clone(), self.font_size * utils::DPI,
+                font.clone(), self.text.clone(), self.color.clone(), self.font_size * utils::dpi(),
                 LineMode::Single, Anchor::Middle))
             .build()
     }
@@ -111,11 +111,11 @@ impl Scoreboard {
         self.entity = Some(world.create_entity()
             .with(UiTransform::new(
                 id, Anchor::TopLeft, Anchor::MiddleLeft,
-                x * utils::DPI, y * utils::DPI, z,
-                200. * utils::DPI, 80. * utils::DPI))
+                x * utils::dpi(), y * utils::dpi(), z,
+                200. * utils::dpi(), 80. * utils::dpi()))
             .with(UiText::new(
                 font.clone(), "Score: 0".to_string(),
-                utils::get_color(utils::BLACK), 20. * utils::DPI,
+                utils::get_color(utils::BLACK), 20. * utils::dpi(),
                 LineMode::Single, Anchor::MiddleLeft))
             .build());
 
@@ -159,24 +159,24 @@ impl Button {
     pub fn get_pos(&self, pivot: Anchor) -> (f32, f32) {
         let x = match pivot {
             Anchor::TopLeft | Anchor::MiddleLeft | Anchor::BottomLeft => {
-                self.pos[0] - self.label.width * utils::DPI * 0.5
+                self.pos[0] - self.label.width * utils::dpi() * 0.5
             }
             Anchor::TopMiddle | Anchor::Middle | Anchor::BottomMiddle => {
                 self.pos[0]
             }
             Anchor::TopRight | Anchor::MiddleRight | Anchor::BottomRight => {
-                self.pos[0] + self.label.width * utils::DPI * 0.5
+                self.pos[0] + self.label.width * utils::dpi() * 0.5
             }
         };
         let y = match pivot {
             Anchor::TopLeft | Anchor::TopMiddle | Anchor::TopRight => {
-                self.pos[1] + self.label.height * utils::DPI * 0.5
+                self.pos[1] + self.label.height * utils::dpi() * 0.5
             }
             Anchor::MiddleLeft | Anchor::Middle | Anchor::MiddleRight => {
                 self.pos[1]
             }
             Anchor::BottomLeft | Anchor::BottomMiddle | Anchor::BottomRight => {
-                self.pos[1] - self.label.height * utils::DPI * 0.5
+                self.pos[1] - self.label.height * utils::dpi() * 0.5
             }
         };
         (x, y)
@@ -189,7 +189,7 @@ impl Button {
     }
 
     pub fn instantiate(&mut self, id: String, world: &mut World, x: f32, y: f32, z: f32) -> Entity {
-        self.pos = [x * utils::DPI, y * utils::DPI, z];
+        self.pos = [x * utils::dpi(), y * utils::dpi(), z];
 
         let font = fonts::Fonts::instance().get(self.label.font_family.clone(), world);
 
@@ -204,7 +204,7 @@ impl Button {
         world.create_entity()
             .with(UiTransform::new(
                 id.clone() + "-frame", Anchor::Middle, Anchor::Middle,
-                x * utils::DPI, y * utils::DPI, z - 0.2, self.label.width + 5., self.label.height + 5.))
+                x * utils::dpi(), y * utils::dpi(), z - 0.2, self.label.width + 5., self.label.height + 5.))
             .with(UiImage::SolidColor(self.fr_color.clone()))
             .with(Parent::new(button))
             .build();
@@ -213,7 +213,7 @@ impl Button {
         world.create_entity()
             .with(UiTransform::new(
                 id.clone() + "-bg", Anchor::Middle, Anchor::Middle,
-                x * utils::DPI, y * utils::DPI, z - 0.1, self.label.width, self.label.height))
+                x * utils::dpi(), y * utils::dpi(), z - 0.1, self.label.width, self.label.height))
             .with(UiImage::SolidColor(self.bg_color.clone()))
             .with(Parent::new(button))
             .build();
@@ -222,11 +222,11 @@ impl Button {
         world.create_entity()
             .with(UiTransform::new(
                 id + "-text", Anchor::Middle, Anchor::Middle,
-                x * utils::DPI, y * utils::DPI, z,
-                self.label.width * utils::DPI, self.label.height * utils::DPI))
+                x * utils::dpi(), y * utils::dpi(), z,
+                self.label.width * utils::dpi(), self.label.height * utils::dpi()))
             .with(UiText::new(
                 font.clone(), self.label.text.clone(), self.label.color.clone(),
-                self.label.font_size * utils::DPI, LineMode::Single, Anchor::Middle))
+                self.label.font_size * utils::dpi(), LineMode::Single, Anchor::Middle))
             .with(Parent::new(button))
             .build();
 

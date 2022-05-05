@@ -1,10 +1,22 @@
 #![allow(dead_code)]
-use amethyst::ui::{
-    Anchor, UiTransform,
+use amethyst::{
+    ui::{ Anchor, UiTransform },
 };
 use amethyst_rendy::palette::Srgba;
 
-pub const DPI: f32 = 1.25;
+static mut _DPI: f32 = 1.;
+
+pub fn dpi() -> f32 {
+    unsafe {
+        _DPI as f32
+    }
+}
+pub fn set_dpi(new_dpi: f32) {
+    unsafe {
+        _DPI = new_dpi;
+    }
+}
+
 pub const BACKGROUND_COLOR: [u32; 4] = [60, 179, 113, 255];
 pub const BLACK: [u32; 4] = [0, 0, 0, 255];
 pub const WHITE: [u32; 4] = [255, 255, 255, 255];

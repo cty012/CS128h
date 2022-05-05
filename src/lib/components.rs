@@ -62,10 +62,10 @@ impl PlayerComp {
         for (uitrans, obj) in (uitrans_store, obj_store).join() {
             if obj.name == self.name {
                 // assign new position
-                let x_before_scale = (uitrans.local_x / utils::DPI) as i32;
-                let y_before_scale = (uitrans.local_y / utils::DPI) as i32;
-                uitrans.local_x = (x_before_scale + self.speed.0) as f32 * utils::DPI;
-                uitrans.local_y = (y_before_scale + self.speed.1) as f32 * utils::DPI;
+                let x_before_scale = (uitrans.local_x / utils::dpi()) as i32;
+                let y_before_scale = (uitrans.local_y / utils::dpi()) as i32;
+                uitrans.local_x = (x_before_scale + self.speed.0) as f32 * utils::dpi();
+                uitrans.local_y = (y_before_scale + self.speed.1) as f32 * utils::dpi();
 
                 // record last position
                 self.last_pos = Some((x_before_scale, y_before_scale));
@@ -117,8 +117,8 @@ impl MovableComp {
         for (uitrans, obj) in (uitrans_store, obj_store).join() {
             if obj.name == self.name {
                 // find unscaled position
-                let x_before_scale = (uitrans.local_x / utils::DPI) as i32;
-                let y_before_scale = (uitrans.local_y / utils::DPI) as i32;
+                let x_before_scale = (uitrans.local_x / utils::dpi()) as i32;
+                let y_before_scale = (uitrans.local_y / utils::dpi()) as i32;
 
                 // update speed
                 for tr in self.track.iter() {
@@ -129,8 +129,8 @@ impl MovableComp {
                 }
 
                 // move
-                uitrans.local_x = (x_before_scale + self.speed.0) as f32 * utils::DPI;
-                uitrans.local_y = (y_before_scale + self.speed.1) as f32 * utils::DPI;
+                uitrans.local_x = (x_before_scale + self.speed.0) as f32 * utils::dpi();
+                uitrans.local_y = (y_before_scale + self.speed.1) as f32 * utils::dpi();
                 break;
             }
         } 
