@@ -1,9 +1,11 @@
+use std::collections::HashMap;
 use amethyst::{
     ecs::{
-        Component, DenseVecStorage, Storage, storage::MaskedStorage, Join,
+        World, WorldExt, Entity, Component, Storage,
+        DenseVecStorage, storage::MaskedStorage, Join,
     },
     shred::{ Fetch, FetchMut },
-    ui::UiTransform,
+    ui::{ UiTransform, UiImage },
 };
 
 use crate::lib::map;
@@ -149,8 +151,11 @@ impl CollidableComp {
     }
 }
 
+#[derive(Clone)]
 pub struct InteractableComp {
     pub name: String,
+    pub state: String,
+    pub command: HashMap<String, Vec<Vec<String>>>,
 }
 
 impl Component for InteractableComp {
@@ -158,8 +163,61 @@ impl Component for InteractableComp {
 }
 
 impl InteractableComp {
-    pub fn new(name: String) -> Self {
-        InteractableComp { name }
+    pub fn new(name: String, command: HashMap<String, Vec<Vec<String>>>) -> Self {
+        InteractableComp { name, state: "close".to_string(), command }
+    }
+
+    pub fn exec(&mut self, world: &mut World) {
+        if !self.command.contains_key(&self.state) { return; }
+        for command in self.command[&self.state].clone().iter() {
+            self.exec_command(world, command);
+        }
+    }
+
+    fn exec_command(&mut self, world: &mut World, command: &Vec<String>) {
+        if command.len() == 0 { return; }
+        match command[0].as_str() {
+            "state" => {
+                self.state = command[1].clone();
+            }
+            "color" => {
+                let obj_store = world.read_storage::<ObjectComp>();
+                let mut img_store = world.write_storage::<UiImage>();
+                let new_color = [
+                    command[1].parse::<u32>().unwrap(),
+                    command[2].parse::<u32>().unwrap(),
+                    command[3].parse::<u32>().unwrap(),
+                    255 as u32,
+                ];
+                for (obj, img) in (&obj_store, &mut img_store).join() {
+                    if obj.name == self.name {
+                        if let UiImage::SolidColor(ref mut color) = img {
+                            *color = utils::get_color(new_color);
+                        }
+                        break;
+                    }
+                }
+            }
+            "remove" => {
+                let obj_store = world.read_storage::<ObjectComp>();
+                let mut entities_to_be_removed: Vec<Entity> = vec![];
+                for entity in (world.entities()).join() {
+                    match obj_store.get(entity) {
+                        Some(obj) => {
+                            if obj.name == command[1] {
+                                entities_to_be_removed.push(entity.clone());
+                            }
+                        }
+                        None => {}
+                    }
+                }
+                drop(obj_store);
+                for ent in entities_to_be_removed.iter() {
+                    world.delete_entity(*ent).expect("Entity does not exist");
+                }
+            }
+            _ => {}
+        }
     }
 }
 

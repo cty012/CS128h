@@ -379,6 +379,7 @@ impl SimpleState for GameState {
         let obj_store = data.world.read_storage::<components::ObjectComp>();
         let mut movable_store = data.world.write_storage::<components::MovableComp>();
         let collidable_store = data.world.read_storage::<components::CollidableComp>();
+        let mut inter_store = data.world.write_storage::<components::InteractableComp>();
 
         // find the player
         let mut _player_comp: Option<&mut components::PlayerComp> = None;
@@ -457,6 +458,14 @@ impl SimpleState for GameState {
             uitrans.local_y = target.1;
         }
 
+        // check if buttons are pressed
+        let mut pressed_buttons: Vec<components::InteractableComp> = vec![];
+        for (uitrans, inter) in (&uitrans_store, &mut inter_store).join() {
+            if utils::compare(player_uitrans.clone(), uitrans.clone()) == Anchor::Middle {
+                pressed_buttons.push(inter.clone());
+            }
+        }
+
         // center camera
         drop(input);
         drop(uitrans_store);
@@ -464,7 +473,13 @@ impl SimpleState for GameState {
         drop(movable_store);
         drop(obj_store);
         drop(collidable_store);
+        drop(inter_store);
         self.follow_player(&data, utils::CAMERA_ALPHA);
+        
+        // execute commands
+        for inter in pressed_buttons.iter_mut() {
+            inter.exec(&mut data.world);
+        }
 
         // check win or lose
         self.check_win(&mut data)

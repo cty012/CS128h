@@ -1,0 +1,287 @@
+(
+    size: (3000, 720),
+    player: (
+        pos: (40, 130),
+        size: (40, 60),
+        color: (255, 0, 0),
+    ),
+    targets: [
+        (
+            name: "t0",
+            pos: (2800, 320),
+            size: (100, 250),
+            color: (240, 230, 140),
+        ),
+    ],
+    coins: [
+        (
+            name: "c0",
+            pos: (1250, 325),
+            size: (10, 10),
+            color: (255, 215, 0),
+        ),
+        (
+            name: "c1",
+            pos: (1250, 525),
+            size: (10, 10),
+            color: (255, 215, 0),
+        ),
+        (
+            name: "c2",
+            pos: (2195, 525),
+            size: (10, 10),
+            color: (255, 215, 0),
+        ),
+    ],
+    switches: [
+        (
+            name: "s0",
+            pos: (1150, 335),
+            size: (30, 30),
+            color: (102, 255, 178),
+            command: {
+                "close": [
+                    ["state", "open"],
+                    ["color", "62", "195", "128"],
+                    ["remove", "o2-block-bottom"],
+                ],
+                "open": [
+                    ["state", "open"],
+                ],
+            },
+        ),
+        (
+            name: "s1",
+            pos: (1150, 535),
+            size: (30, 30),
+            color: (102, 255, 178),
+            command: {
+                "close": [
+                    ["state", "open"],
+                    ["color", "62", "195", "128"],
+                    ["remove", "o2-block-top"],
+                ],
+                "open": [
+                    ["state", "open"],
+                ],
+            },
+        ),
+        (
+            name: "s2",
+            pos: (1920, 485),
+            size: (30, 30),
+            color: (102, 255, 178),
+            command: {
+                "close": [
+                    ["state", "open"],
+                    ["color", "62", "195", "128"],
+                    ["remove", "o3-block"],
+                ],
+                "open": [
+                    ["state", "open"],
+                ],
+            },
+        ),
+        (
+            name: "s3",
+            pos: (1920, 685),
+            size: (30, 30),
+            color: (102, 255, 178),
+            command: {
+                "close": [
+                    ["state", "open"],
+                    ["color", "62", "195", "128"],
+                    ["remove", "o1-block"],
+                ],
+                "open": [
+                    ["state", "open"],
+                ],
+            },
+        ),
+    ],
+    monsters: [
+        (
+            name: "m0",
+            track: [
+                (
+                    pos: (550, 120),
+                    speed: (0, 0),
+                ),
+            ],
+            size: (200, 50),
+            color: (255, 128, 0),
+        ),
+        (
+            name: "m1",
+            track: [
+                (
+                    pos: (1400, 130),
+                    speed: (-1, 0),
+                ),
+                (
+                    pos: (910, 130),
+                    speed: (1, 0),
+                ),
+            ],
+            size: (40, 60),
+            color: (50, 205, 50),
+        ),
+    ],
+    elevators: [
+        (
+            name: "e0",
+            track: [
+                (
+                    pos: (1520, 220),
+                    speed: (0, 1),
+                ),
+                (
+                    pos: (1520, 520),
+                    speed: (0, -1),
+                ),
+            ],
+            size: (160, 40),
+            color: (0, 0, 128),
+        ),
+    ],
+    obstacles: [
+        (
+            name: "o-ground",
+            pos: (0, 70),
+            size: (3000, 70),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o-ceiling",
+            pos: (0, 730),
+            size: (3000, 10),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o0-left",
+            pos: (400, 170),
+            size: (150, 100),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o0-right",
+            pos: (750, 170),
+            size: (150, 100),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o1-top",
+            pos: (1000, 820),
+            size: (400, 250),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o1-left-top",
+            pos: (1000, 570),
+            size: (100, 100),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o1-middle",
+            pos: (1000, 470),
+            size: (400, 100),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o1-left-bottom",
+            pos: (1000, 370),
+            size: (100, 100),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o1-bottom",
+            pos: (1000, 270),
+            size: (400, 50),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o1-step",
+            pos: (1350, 220),
+            size: (150, 50),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o1-block",
+            pos: (1330, 370),
+            size: (20, 100),
+            color: (0, 0, 192),
+        ),
+        (
+            name: "o2-right",
+            pos: (2000, 820),
+            size: (100, 600),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o2-block-top",
+            pos: (1750, 720),
+            size: (20, 100),
+            color: (0, 0, 192),
+        ),
+        (
+            name: "o2-top",
+            pos: (1700, 620),
+            size: (300, 100),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o2-block-bottom",
+            pos: (1750, 520),
+            size: (20, 100),
+            color: (0, 0, 192),
+        ),
+        (
+            name: "o2-bottom",
+            pos: (1700, 420),
+            size: (300, 200),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o3-top",
+            pos: (2300, 720),
+            size: (200, 400),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o3-bottom",
+            pos: (2300, 120),
+            size: (200, 50),
+            color: (0, 0, 128),
+        ),
+        (
+            name: "o3-block",
+            pos: (2385, 320),
+            size: (30, 200),
+            color: (0, 0, 192),
+        ),
+    ],
+    descriptions: [
+        (
+            name: "d-lava",
+            pos: (600, 290),
+            size: (180, 100),
+            text: "JUMP OVER THE LAVA",
+            font: (
+                family: "uasquared.ttf",
+                size: 20,
+            ),
+            color: (128, 128, 128),
+        ),
+        (
+            name: "d-switch",
+            pos: (1520, 540),
+            size: (180, 100),
+            text: "BUTTONS CAN ALTER THE MAP IN A CERTAIN WAY",
+            font: (
+                family: "uasquared.ttf",
+                size: 20,
+            ),
+            color: (128, 128, 128),
+        ),
+    ],
+)

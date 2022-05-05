@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 use amethyst::{
     core::Parent,
@@ -99,7 +100,7 @@ impl Target {
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Target))
-            .with(components::InteractableComp::new(self.name.clone()))
+            .with(components::InteractableComp::new(self.name.clone(), HashMap::new()))
             .with(Parent::new(*parent))
             .build();
     }
@@ -123,7 +124,7 @@ impl Coin {
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Coin))
-            .with(components::InteractableComp::new(self.name.clone()))
+            .with(components::InteractableComp::new(self.name.clone(), HashMap::new()))
             .with(Parent::new(*parent))
             .build();
     }
@@ -135,6 +136,7 @@ pub struct Switch {
     pub pos: (i32, i32),
     pub size: (u32, u32),
     pub color: (u32, u32, u32),
+    pub command: HashMap<String, Vec<Vec<String>>>,
 }
 
 impl Switch {
@@ -147,7 +149,7 @@ impl Switch {
             .with(UiImage::SolidColor(
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Switch))
-            .with(components::InteractableComp::new(self.name.clone()))
+            .with(components::InteractableComp::new(self.name.clone(), self.command.clone()))
             .with(Parent::new(*parent))
             .build();
     }
@@ -172,7 +174,7 @@ impl Monster {
                 utils::get_color([self.color.0, self.color.1, self.color.2, 255])))
             .with(components::ObjectComp::new(self.name.clone(), components::ObjectType::Monster))
             .with(components::MovableComp::new(self.name.clone(), self.track.clone()))
-            .with(components::InteractableComp::new(self.name.clone()))
+            .with(components::InteractableComp::new(self.name.clone(), HashMap::new()))
             .with(Parent::new(*parent))
             .build();
     }
