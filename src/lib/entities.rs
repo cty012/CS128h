@@ -204,7 +204,8 @@ impl Button {
         world.create_entity()
             .with(UiTransform::new(
                 id.clone() + "-frame", Anchor::Middle, Anchor::Middle,
-                x * utils::dpi(), y * utils::dpi(), z - 0.2, self.label.width + 5., self.label.height + 5.))
+                x * utils::dpi(), y * utils::dpi(), z - 0.2,
+                (self.label.width + 5.) * utils::dpi(), (self.label.height + 5.) * utils::dpi()))
             .with(UiImage::SolidColor(self.fr_color.clone()))
             .with(Parent::new(button))
             .build();
@@ -213,7 +214,8 @@ impl Button {
         world.create_entity()
             .with(UiTransform::new(
                 id.clone() + "-bg", Anchor::Middle, Anchor::Middle,
-                x * utils::dpi(), y * utils::dpi(), z - 0.1, self.label.width, self.label.height))
+                x * utils::dpi(), y * utils::dpi(), z - 0.1,
+                self.label.width * utils::dpi(), self.label.height * utils::dpi()))
             .with(UiImage::SolidColor(self.bg_color.clone()))
             .with(Parent::new(button))
             .build();

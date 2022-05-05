@@ -53,15 +53,18 @@ impl SimpleState for MenuState {
         // instantiate the background and the title
         entities::Background::default().instantiate("background".to_string(), data.world);
         entities::Label::default(
-            "Platformer with RUST".to_string(), 600., 150., "cambria.ttf".to_string(), 60.)
+            "Platformer with RUST".to_string(), 600., 150.,
+            "cambria.ttf".to_string(), 60.)
             .instantiate("title".to_string(), data.world, 0., 200., 1.);
 
         // instantiate the buttons
         self.b_level = Some(entities::Button::default(
-            "New Game".to_string(), 300., 60., "merriweather.ttf".to_string(), 30.));
+            "New Game".to_string(), 300., 60.,
+            "merriweather.ttf".to_string(), 30.));
         self.b_level.as_mut().unwrap().instantiate("level".to_string(), data.world, 0., 0., 1.);
         self.b_exit = Some(entities::Button::default(
-            "Exit".to_string(), 300., 60., "merriweather.ttf".to_string(), 30.));
+            "Exit".to_string(), 300., 60.,
+            "merriweather.ttf".to_string(), 30.));
         self.b_exit.as_mut().unwrap().instantiate("exit".to_string(), data.world, 0., -120., 1.);
     }
 
