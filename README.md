@@ -1,4 +1,6 @@
 # CS128h Final Project
+## Group Name
+Name.unwrap_or(group_num.to_string())
 ## Group Members
 Tianyue Cao (tc37)
 ## Project Introduction
