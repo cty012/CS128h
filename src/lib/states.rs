@@ -503,7 +503,7 @@ impl SimpleState for GameState {
     }
 }
 
-// Pause: the menu when the game is paused or concluded
+// Pause: the in-game menu when the game is paused or concluded
 #[derive(Default)]
 pub struct PauseState {
     level: u32,  // the level currently playing
