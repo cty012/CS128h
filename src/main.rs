@@ -14,10 +14,12 @@ use amethyst::{
 mod lib;
 
 fn main() -> amethyst::Result<()> {
+    // find the paths to important locations
     let app_root = application_root_dir()?;
     let resources_path = app_root.join("assets");
     let display_path = app_root.join("config/display.ron");
 
+    // create the game data
     amethyst::start_logger(Default::default());
     let game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
@@ -29,6 +31,7 @@ fn main() -> amethyst::Result<()> {
             .with_plugin(RenderUi::default())
             .with_plugin(RenderFlat2D::default()))?;
 
+    // start the game with InitState
     let mut game = Application::new(resources_path, lib::states::InitState::default(), game_data)?;
     game.run();
 

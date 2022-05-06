@@ -14,7 +14,7 @@ use crate::lib::entities;
 use crate::lib::map;
 use crate::lib::utils;
 
-// Init
+// Init: initialize the environment
 #[derive(Default)]
 pub struct InitState;
 
@@ -36,12 +36,14 @@ impl SimpleState for InitState {
         // camera only need to be initialized once
         entities::init_camera(&mut data.world);
     }
+
     fn update(&mut self, _data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
+        // switch to the MenuState after initialization is finished
         Trans::Replace(Box::new(MenuState::default()))
     }
 }
 
-// Menu
+// Menu: Main menu of the game
 #[derive(Default)]
 pub struct MenuState {
     b_level: Option<entities::Button>,  // new game button data (not the actual entity)
@@ -268,6 +270,8 @@ impl GameState {
         }
     }
 
+    // helper function for finding the relative position between the player and other objects
+    // the result helps resolve collisions
     fn get_rel_pos(&self, data: &StateData<'_, GameData<'_, '_>>) -> HashMap<String, Anchor> {
         let uitrans_store = data.world.read_storage::<UiTransform>();
         let player_store = data.world.read_storage::<components::PlayerComp>();
@@ -332,7 +336,8 @@ impl GameState {
             match obj.type_ {
                 components::ObjectType::Coin => {
                     if utils::compare(player_uitrans.clone(), uitrans.clone()) == Anchor::Middle {
-                        // remove this object
+                        // will be removed later
+                        // they cannot be removed now because is currently iterating though them
                         coins_to_remove.push(obj.name.clone());
                     }
                 }
@@ -498,12 +503,11 @@ impl SimpleState for GameState {
     }
 }
 
-// TODO: Add a new pause state (also deal with win/lose situation)
-// Game
+// Pause: the menu when the game is paused or concluded
 #[derive(Default)]
 pub struct PauseState {
-    level: u32,
-    status: GameStatus,
+    level: u32,  // the level currently playing
+    status: GameStatus,  // win, lose, or pause
     score: i32,
     b_game: Option<entities::Button>,  // resume/replay button data
     b_menu: Option<entities::Button>,  // main menu button data
@@ -542,14 +546,14 @@ impl SimpleState for PauseState {
         self.ent_title = Some(entities::Label::default(
             title_msg, 600., 200., "cambria.ttf".to_string(), 60.)
             .instantiate("title".to_string(), data.world, 0., 150., 3.));
+            
+        // instantiate the status and the scoreboard
         self.ent_status = Some(entities::Label::default(
             status_msg.to_string(), 600., 200., "cambria.ttf".to_string(), 25.)
             .instantiate("status".to_string(), data.world, 0., 90., 3.));
         self.ent_score = Some(entities::Label::default(
             score_msg.to_string(), 600., 200., "cambria.ttf".to_string(), 25.)
             .instantiate("score".to_string(), data.world, 0., 50., 3.));
-
-        // instantiate the scoreboard TODO
 
         // instantiate the buttons
         self.b_game = Some(entities::Button::default(
